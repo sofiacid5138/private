@@ -2,17 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>dreamy bunny house cafe</title>
+{% block titulo %} {% endblock %}
+  <title></title>
 
   <style>
     @font-face {
       font-family: 'cream';
-      src: url('fonts/cream.ttf') format('truetype');
+      src: url('{{ url_for('static',filename='/fonts/cream.ttf')}}') format('truetype');
     }
 
     @font-face {
       font-family: 'porkys';
-      src: url('fonts/porkys.ttf') format('truetype');
+      src: url('{{ url_for('static',filename='/fonts/porkys.ttf')}}') format('truetype');
     }
 
     html {
@@ -114,37 +115,9 @@
 </head>
 
 <body>
+{% block contenido %} {% endblock %}
 
-  <header class="menu-bar">
-    <img src="logo.png" class="logo" alt="dreamy bunny logo">
 
-    <nav>
-      <a href="#quienes">¿Quiénes somos?</a>
-      <a href="#reservas">¡Reservaciones aquí!</a>
-      <a href="#bunnys">Bunnys</a>
-      <a href="#menu">Menu</a>
-      <a href="#reglas">Reglas</a>
-      <a href="#eventos">¡Eventos especiales!</a>
-      <a href="#contacto">Contáctanos</a>
-    </nav>
-  </header>
-
-  <section id="quienes">
-    <h2>¿Quiénes somos?</h2>
-    <p>
-      Nosotr@s somos <strong>Dreamy bunny house cafe!</strong>, pero te preguntarás…<br><br>
-
-      ¿Qué es dreamy bunny house cafe? es muy fácil.<br>
-      somos una cafetería temática tipo maid cafe, donde todas las meseras son maids
-      con estilo conejita bunny, inspiradas en una estética kawaii y muy encantadora.<br><br>
-
-      Nuestro objetivo es ofrecer una experiencia divertida y respetuosa,
-      acompañada de café y postres.<br><br>
-
-      ¡Después de esta breve explicación, qué puedes esperar!
-      ¡Puedes reservar ahora!
-    </p>
-  </section>
 
 </body>
 </html>
