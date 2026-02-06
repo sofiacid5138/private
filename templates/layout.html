@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-{% block titulo %} {% endblock %}
-  <title></title>
+<link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
+  <title>{% block titulo %} {% endblock %}</title>
 
   <style>
     @font-face {
@@ -117,7 +117,7 @@
 <body>
 {% block contenido %} {% endblock %}
 
-
+<script src="{{ url_for('static',filename='/js/bootstrap.bundle.min.js')}}"></script>
 
 </body>
 </html>
