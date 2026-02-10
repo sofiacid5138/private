@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block titulo %} Un saltito de ensueño y dulzura en cada taza{% endblock %}
+{% block contenido %} 
+
+<form action="/signup" method="post">
+    <input type="text" name="nombre" placeholder="Nombre de Usuario"required>
+    <input type="email" name="correo" placeholder="Correo Electornico"required>
+    <input type="password" name="clave" placeholder="Contraseña"required>
+    
+</form>
+
+{% endblock %}
