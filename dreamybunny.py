@@ -1,7 +1,8 @@
+
 from flask import Flask,render_template,url_for,request
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash
-from config import  config
+from config import Config
 
 dreamybunnyApp = Flask(__name__)
 db             =MySQL(dreamybunnyApp)
@@ -12,7 +13,7 @@ def home():
 
 @dreamybunnyApp.route('/signup',methods=['GET','POST'])
 def signup():
-    
+
 
 if request.form ==  'POST':
     nombre = request.form['nombre']
@@ -24,8 +25,8 @@ if request.form ==  'POST':
     db.connection.commit()
     regUsuario.close()
     return render_template('home.html')
-
 else:
+    return render_template('signup.html')
 
 if __name__ == '__main__':
     @dreamybunnyApp.config.fromobject(config[development])

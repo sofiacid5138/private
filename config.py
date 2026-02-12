@@ -8,6 +8,6 @@ class DevelopmentConfig(Config):
     MYSQL_PASSWORD  ='mysql'
     MYSQL_DB        = 'steetkick'
 
-config = {
-    'deveploment':DevelopmentConfig
-}
+    config = {
+        'deveploment':DevelopmentConfig
+    }
