@@ -12,7 +12,7 @@ db             =MySQL(dreamybunnyApp)
 adminUsuarios =LoginManager (dreamybunnyApp)
 
 @adminUsuarios.user_loader
-def cargarUsuario
+def cargarUsuario():
     return ModelUser.get_by_id(db,id)
 @dreamybunnyApp.route('/')
 def home():
@@ -38,21 +38,21 @@ def signup():
 @dreamybunnyApp.route('/signin',methods=['GET','POST'])
 def signin():
     if request.method == 'POST':
-        usuario = User(0,None,request.form['correo'], request.form ['clave'] None)
-        usuarioAutenticado = ModelUser.signin(deb,usuario)
+        usuario = User(0,None,request.form['correo'], request.form ['clave'], None)
+        usuarioAutenticado = ModelUser.signin(db,usuario)
         if usuarioAutenticado is not None:
             if usuarioAutenticado.clave:
                 login_user(usuarioAutenticado)
-                if usuarioAutenticado.perfil == 'A'
-                return render_template('admin.html')
+                if usuarioAutenticado.perfil == 'A':
+                    return render_template('admin.html')
+                else:
+                    return render_template('usuario.html')
             else:
-                return render_template('usuario.html')
-            else
                 return 'contraseña incorrecta'
         else:
-                return 'usuario inexistente'
+            return 'usuario inexistente'
     else:
-        return render render_template('signin.html')
+        return render_template('signin.html')
 
 if __name__ == '__main__':
     dreamybunnyApp.config.from_object(config['development'])

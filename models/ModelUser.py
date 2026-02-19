@@ -1,4 +1,3 @@
-ModelUser.py
 from models.entities.User import User
 
 class ModelUser:
