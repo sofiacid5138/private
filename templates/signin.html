@@ -1,25 +1,34 @@
 {% extends 'layout.html' %}
 
-{% block titulo %} Registro - DreamyBunny {% endblock %}
+{% block titulo %} Iniciar Sesión - DreamyBunny {% endblock %}
 
 {% block contenido %}
 <section>
-    <h2>Crea tu cuenta</h2>
-    <p>¡Únete a nuestra dulce comunidad!</p>
-    <form action="/signup" method="post" class="mt-4">
-        <div class="mb-3">
-            <input type="text" name="nombre" class="form-control" placeholder="Nombre de Usuario" required>
-        </div>
+    <h2>¡Bienvenido de vuelta!</h2>
+    <p>Te extrañamos. ¡Inicia sesión para continuar!</p>
+    
+    <!-- Aquí se mostrarán los mensajes de error/éxito -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} mt-3" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="/signin" method="post" class="mt-4">
         <div class="mb-3">
             <input type="email" name="correo" class="form-control" placeholder="Correo Electrónico" required>
         </div>
         <div class="mb-3">
             <input type="password" name="clave" class="form-control" placeholder="Contraseña" required>
         </div>
-        <button type="submit" class="btn-auth">Crear cuenta</button>
+        <button type="submit" class="btn-auth">Iniciar Sesión</button>
     </form>
     <div class="text-center mt-3">
-        <a href="{{ url_for('signin') }}">¿Ya tienes una cuenta? Inicia sesión</a>
+        <a href="{{ url_for('signup') }}">¿No tienes una cuenta? Regístrate</a>
     </div>
 </section>
 

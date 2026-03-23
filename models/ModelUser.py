@@ -1,28 +1,48 @@
-from models.entities.User import User
+from .entities.User import User
+from werkzeug.security import check_password_hash
 
-class ModelUser:
+class ModelUser():
+
     @classmethod
-    def signin(self, db, usuario):
+    def signin(cls, db, user):
         try:
-            selUsuario = db.connection.cursor()
-            selUsuario.execute("SELECT * FROM usuario WHERE correo = %s",(usuario.correo,))
-            u = selUsuario.fetchone()
-            if u is not None:
-                return User(u[0],u[1],u[2],User.validar_clave(u[3],usuario.clave),u[4])
-            else:
-                return None
+            cursor = db.connection.cursor()
+            sql = "SELECT id, perfil, nombre, correo, clave FROM usuario WHERE correo = %s"
+            cursor.execute(sql, (user.correo,))
+            row = cursor.fetchone()
+            if row and check_password_hash(row[4], user.clave):
+                logged_user = User(id=row[0], perfil=row[1], nombre=row[2], correo=row[3], clave=None)
+                return logged_user
+            return None
         except Exception as ex:
             raise Exception(ex)
 
     @classmethod
-    def get_by_id(self, db, id):
+    def signup(cls, db, user):
         try:
-            selUsuario = db.connection.cursor()
-            selUsuario.execute("SELECT * FROM usuario WHERE id = %s",(id,))
-            u = selUsuario.fetchone()
-            if u is not None:
-                return User(u[0],u[1],u[2],u[3],u[4])
-            else:
-                return None
+            cursor = db.connection.cursor()
+            sql_check = "SELECT correo FROM usuario WHERE correo = %s"
+            cursor.execute(sql_check, (user.correo,))
+            if cursor.fetchone():
+                return False
+            
+            sql_insert = "INSERT INTO usuario (perfil, nombre, correo, clave) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql_insert, (user.perfil, user.nombre.upper(), user.correo, user.clave))
+            db.connection.commit()
+            return True
+        except Exception as ex:
+            db.connection.rollback()
+            raise Exception(ex)
+
+    @classmethod
+    def get_by_id(cls, db, id):
+        try:
+            cursor = db.connection.cursor()
+            sql = "SELECT id, perfil, nombre, correo FROM usuario WHERE id = %s"
+            cursor.execute(sql, (id,))
+            row = cursor.fetchone()
+            if row:
+                return User(id=row[0], perfil=row[1], nombre=row[2], correo=row[3], clave=None)
+            return None
         except Exception as ex:
             raise Exception(ex)

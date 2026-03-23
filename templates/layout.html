@@ -1,82 +1,43 @@
+<!-- templates/layout.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-<link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
-  <title>{% block titulo %} {% endblock %}</title>
-
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
+    <title>DreamyBunny</title>
+    <style>
+    /* ===== Tu CSS existente ===== */
     @font-face {
-      font-family: 'cream';
-      src: url('{{ url_for('static',filename='/fonts/cream.ttf')}}') format('truetype');
-    }
-
-    @font-face {
-      font-family: 'porkys';
-      src: url('{{ url_for('static',filename='/fonts/porkys.ttf')}}') format('truetype');
-    }
-
-    html {
-      scroll-behavior: smooth;
+      font-family: 'porky';
+      src: url("{{ url_for('static',filename='font/porky.ttf')}}") format('truetype');
     }
 
     body {
-      margin: 0;
       background: linear-gradient(
         250deg,
-        #d0fafa,
-        #abeced,
-        #fec3df
+        #f8cdda,
+        #fde4ee
       );
-      font-family: 'cream', sans-serif;
-      color: #4a3a3a;
     }
-
-    /* ===== barra menu ===== */
-    .menu-bar {
-      position: relative;
-      background: linear-gradient(
-        180deg,
-        #ffa7ce,
-        #fd94c3
-      );
-      padding: 55px 20px 35px;
-      border-bottom-left-radius: 100px;
-      border-bottom-right-radius: 100px;
+    
+    /* === EL ARREGLO ESTÁ AQUÍ === */
+    nav.navbar {
+      margin-top: 100px; /* Empuja la barra hacia abajo. ¡Ajusta este valor si es necesario! */
     }
+    /* === FIN DEL ARREGLO === */
 
-    /* logo */
-    .logo {
+    img {
       position: absolute;
-      top: -35px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 130px;
-      animation: float 3s ease-in-out infinite;
+      top: 10px;
+      left: 15px;
+      width: 250px;
+      z-index: 10;
+      transition: transform 0.3s ease;
     }
 
-    @keyframes float {
-      0%,100% { transform: translate(-50%,0); }
-      50% { transform: translate(-50%,-10px); }
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    nav a {
-      text-decoration: none;
-      font-family: 'porkys', cursive;
-      color: #ffffff;
-      font-size: 1.15em;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      transition: transform 0.3s;
-    }
-
-    nav a:hover {
+    img:hover {
+      transform: scale(1.1);
       animation: jump 0.4s ease;
     }
 

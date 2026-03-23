@@ -1,0 +1,347 @@
+{% extends 'layout.html' %}
+
+{% block titulo %} Panel de Usuario - DreamyBunny {% endblock %}
+
+{% block contenido %}
+
+<section class="user-dashboard-section">
+    <div class="text-center mb-5">
+        <img src="{{ url_for('static', filename='img/avatar_placeholder.png') }}" alt="Avatar de Usuario" class="user-avatar mb-3">
+        <h2>¡Bienvenido al Panel de {{ current_user.nombre }}!</h2>
+        <p class="lead text-muted">Aquí puedes gestionar todos los aspectos de tu dulce experiencia en DreamyBunny.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Columna Lateral para Navegación -->
+        <div class="col-lg-3 col-md-4">
+            <div class="dashboard-sidebar p-3 shadow-sm rounded-3">
+                <h5 class="sidebar-title mb-3">Tu Cuenta</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="pill" href="#overview" role="tab" aria-controls="overview" aria-selected="true">
+                            <i class="bi bi-house-door-fill me-2"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                            <i class="bi bi-person-fill me-2"></i>Mi Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#orders" role="tab" aria-controls="orders" aria-selected="false">
+                            <i class="bi bi-bag-fill me-2"></i>Mis Pedidos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">
+                            <i class="bi bi-heart-fill me-2"></i>Mis Favoritos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#settings" role="tab" aria-controls="settings" aria-selected="false">
+                            <i class="bi bi-gear-fill me-2"></i>Configuración
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('logout') }}">
+                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contenido Principal del Panel -->
+        <div class="col-lg-9 col-md-8">
+            <div class="tab-content dashboard-content p-4 shadow-sm rounded-3">
+                
+                <!-- Pestaña de Inicio (Overview) -->
+                <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                    <h3>Resumen General</h3>
+                    <p>Aquí tienes un vistazo rápido de tu actividad.</p>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="info-card text-center">
+                                <div class="card-icon">🛍️</div>
+                                <h4>Pedidos Completados</h4>
+                                <p class="h3">5</p>
+                                <small>Hasta la fecha</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="info-card text-center">
+                                <div class="card-icon">⭐</div>
+                                <h4>Productos Favoritos</h4>
+                                <p class="h3">12</p>
+                                <small>Listos para ti</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="info-card text-center">
+                                <div class="card-icon">🎂</div>
+                                <h4>Días desde el registro</h4>
+                                <p class="h3">365</p>
+                                <small>¡Un año contigo!</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-5">Últimos Pedidos</h4>
+                    <ul class="list-group list-group-flush recent-orders">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pedido #DB123456
+                            <span class="badge bg-primary rounded-pill">Entregado</span>
+                            <span class="text-muted">2026-03-20</span>
+                            <a href="#" class="text-decoration-none text-info">Ver detalles</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pedido #DB123455
+                            <span class="badge bg-warning text-dark rounded-pill">En Proceso</span>
+                            <span class="text-muted">2026-03-15</span>
+                            <a href="#" class="text-decoration-none text-info">Ver detalles</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pedido #DB123454
+                            <span class="badge bg-danger rounded-pill">Cancelado</span>
+                            <span class="text-muted">2026-03-10</span>
+                            <a href="#" class="text-decoration-none text-info">Ver detalles</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pestaña de Mi Perfil -->
+                <div class="tab-pane fade" id="profile" role="tabpanel">
+                    <h3>Mi Perfil</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="profileName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="profileName" value="{{ current_user.nombre }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="profileEmail" value="{{ current_user.correo }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileMemberSince" class="form-label">Miembro desde</label>
+                            <input type="text" class="form-control" id="profileMemberSince" value="2025-03-23" disabled>
+                        </div>
+                        <button type="button" class="btn-primary-custom mt-3">Editar Información</button>
+                    </form>
+                </div>
+
+                <!-- Pestaña de Mis Pedidos -->
+                <div class="tab-pane fade" id="orders" role="tabpanel">
+                    <h3>Historial de Pedidos</h3>
+                    <p>Aquí puedes ver todos tus pedidos anteriores y su estado actual.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover mt-3 user-table">
+                            <thead>
+                                <tr>
+                                    <th>ID Pedido</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DB123456</td>
+                                    <td>2026-03-20</td>
+                                    <td>$25.50</td>
+                                    <td><span class="badge bg-primary">Entregado</span></td>
+                                    <td><a href="#" class="btn btn-sm btn-outline-info">Ver</a></td>
+                                </tr>
+                                <tr>
+                                    <td>DB123455</td>
+                                    <td>2026-03-15</td>
+                                    <td>$18.00</td>
+                                    <td><span class="badge bg-warning text-dark">En Proceso</span></td>
+                                    <td><a href="#" class="btn btn-sm btn-outline-info">Ver</a></td>
+                                </tr>
+                                <tr>
+                                    <td>DB123454</td>
+                                    <td>2026-03-10</td>
+                                    <td>$30.25</td>
+                                    <td><span class="badge bg-danger">Cancelado</span></td>
+                                    <td><a href="#" class="btn btn-sm btn-outline-info">Ver</a></td>
+                                </tr>
+                                <tr>
+                                    <td>DB123453</td>
+                                    <td>2026-03-05</td>
+                                    <td>$15.00</td>
+                                    <td><span class="badge bg-primary">Entregado</span></td>
+                                    <td><a href="#" class="btn btn-sm btn-outline-info">Ver</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pestaña de Mis Favoritos -->
+                <div class="tab-pane fade" id="favorites" role="tabpanel">
+                    <h3>Mis Productos Favoritos</h3>
+                    <p>Una selección de tus productos más queridos.</p>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="favorite-product-card p-3 text-center rounded-3 shadow-sm">
+                                <img src="{{ url_for('static', filename='img/cupcake_placeholder.png') }}" alt="Producto Favorito" class="img-fluid mb-2 rounded">
+                                <h5>Cupcake de Fresa</h5>
+                                <p class="text-muted">$3.50</p>
+                                <a href="#" class="btn btn-sm btn-primary-custom-light">Ver Producto</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="favorite-product-card p-3 text-center rounded-3 shadow-sm">
+                                <img src="{{ url_for('static', filename='img/donut_placeholder.png') }}" alt="Producto Favorito" class="img-fluid mb-2 rounded">
+                                <h5>Dona Glaseada</h5>
+                                <p class="text-muted">$2.00</p>
+                                <a href="#" class="btn btn-sm btn-primary-custom-light">Ver Producto</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="favorite-product-card p-3 text-center rounded-3 shadow-sm">
+                                <img src="{{ url_for('static', filename='img/macaron_placeholder.png') }}" alt="Producto Favorito" class="img-fluid mb-2 rounded">
+                                <h5>Macaron de Vainilla</h5>
+                                <p class="text-muted">$2.75</p>
+                                <a href="#" class="btn btn-sm btn-primary-custom-light">Ver Producto</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pestaña de Configuración -->
+                <div class="tab-pane fade" id="settings" role="tabpanel">
+                    <h3>Configuración de la Cuenta</h3>
+                    <p>Gestiona tus preferencias y seguridad.</p>
+                    <form class="mt-4">
+                        <h5>Cambiar Contraseña</h5>
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                            <input type="password" class="form-control" id="currentPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="newPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="confirmNewPassword">
+                        </div>
+                        <button type="submit" class="btn-primary-custom">Actualizar Contraseña</button>
+                    </form>
+
+                    <h5 class="mt-5">Preferencias de Notificación</h5>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                        <label class="form-check-label" for="emailNotifications">Recibir notificaciones por correo electrónico</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="promoNotifications">
+                        <label class="form-check-label" for="promoNotifications">Recibir ofertas y promociones</label>
+                    </div>
+                    <button type="submit" class="btn-primary-custom mt-3">Guardar Preferencias</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Editar Mi Perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="modalProfileName" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="modalProfileName" value="{{ current_user.nombre }}">
+            </div>
+            <div class="mb-3">
+                <label for="modalProfileEmail" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="modalProfileEmail" value="{{ current_user.correo }}" disabled>
+                <div class="form-text">El correo electrónico no se puede cambiar.</div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn-primary-custom">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content custom-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderDetailsModalLabel">Detalles del Pedido #DB123456</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Resumen del Pedido</h6>
+        <p><strong>Fecha:</strong> 2026-03-20<br><strong>Estado:</strong> Entregado</p>
+        <hr>
+        <h6>Productos</h6>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>1x Cupcake de Fresa</span>
+                <span>$3.50</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>2x Dona Glaseada</span>
+                <span>$4.00</span>
+            </li>
+             <li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+                <span>Subtotal</span>
+                <span>$7.50</span>
+            </li>
+        </ul>
+        <hr>
+        <h6>Información de Envío</h6>
+        <p><strong>Dirección:</strong> Calle Ficticia 123, Colonia Centro, Ciudad, CP 12345<br><strong>Costo de Envío:</strong> $5.00</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <span class="fw-bold fs-5" style="color: #fd94c3;">Total: $12.50</span>
+        <button type="button" class="btn-primary-custom" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Cambiar mi Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <form>
+            <div class="mb-3">
+                <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                <input type="password" class="form-control" id="currentPassword">
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                <input type="password" class="form-control" id="newPassword">
+            </div>
+            <div class="mb-3">
+                <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" class="form-control" id="confirmNewPassword">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn-primary-custom">Actualizar Contraseña</button>
+      </div>
+    </div>
+  </div>
+</div>
