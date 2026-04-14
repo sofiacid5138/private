@@ -105,3 +105,13 @@ def user_page():
 
 if __name__ == '__main__':
     dreamybunnyApp.run(port=3000, debug=True)
+
+
+@dreamybunnyApp.route('s/Productos,methods= ['GET','POST'])
+def Sproductos():
+    selProducto = db.connection.cursor()
+    sellProducto.execute ("SELECT" * FROM usuario" )
+    p= selProducto.close()
+    return render_template('productos.html',productos=p)
+    
+    
