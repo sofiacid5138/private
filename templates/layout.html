@@ -6,77 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
     <title>DreamyBunny</title>
+
     <style>
-    /* ===== Tu CSS existente ===== */
+
     @font-face {
-      font-family: 'porky';
+      font-family: 'porkys';
       src: url("{{ url_for('static',filename='font/porky.ttf')}}") format('truetype');
     }
 
     body {
-      background: linear-gradient(
-        250deg,
-        #f8cdda,
-        #fde4ee
-      );
-    }
-    
-    /* === EL ARREGLO ESTÁ AQUÍ === */
-    nav.navbar {
-      margin-top: 100px; /* Empuja la barra hacia abajo. ¡Ajusta este valor si es necesario! */
-    }
-    /* === FIN DEL ARREGLO === */
-
-    img {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      width: 250px;
-      z-index: 10;
-      transition: transform 0.3s ease;
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(250deg,#f8cdda,#fde4ee);
     }
 
-    img:hover {
-      transform: scale(1.1);
-      animation: jump 0.4s ease;
+    /* ===== HEADER CONTENEDOR ===== */
+    .header-container{
+      position:relative;
+      padding-top:90px; /* espacio para logo */
     }
 
-    @keyframes jump {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0); }
+    /* ===== LOGO (solo logo, no todas las img) ===== */
+    .logo{
+      position:absolute;
+      top:-30px;
+      left:50%;
+      transform:translateX(-50%);
+      width:100px; /* más pequeño */
+      z-index:10;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav.navbar{
+      margin-top:20px; /* ya no exagerado */
     }
 
     /* ===== secciones ===== */
     section {
-      background: linear-gradient(
-        250deg,
-        #abeced,
-        #a6e0e2
-      );
       margin: 90px auto;
       padding: 45px;
       max-width: 950px;
       border-radius: 40px;
-      box-shadow: 0 15px 25px rgba(0,0,0,0.08);
     }
 
-    h2 {
-      font-family: 'porkys', cursive;
-      color: #fd94c3;
-      font-size: 2.4em;
-      margin-top: 0;
-    }
-
-    p {
-      line-height: 1.8;
-      font-size: 1.05em;
-    }
-  </style>
+    </style>
 </head>
 
 <body>
-{% block contenido %} {% endblock %}
+
+<div class="header-container">
+
+  <!-- LOGO CENTRADO -->
+  <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
+
+  {% block contenido %}{% endblock %}
+
+</div>
 
 <script src="{{ url_for('static',filename='/js/bootstrap.bundle.min.js')}}"></script>
 

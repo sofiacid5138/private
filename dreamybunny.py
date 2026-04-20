@@ -1,6 +1,4 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
 from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
@@ -103,15 +101,72 @@ def user_page():
     """Página para usuarios normales."""
     return render_template('user.html') # Asumiendo que tienes un user.html
 
-if __name__ == '__main__':
-    dreamybunnyApp.run(port=3000, debug=True)
+@dreamybunnyApp.route('/sUsuario',methods = ['GET','POST'])
+def sUsuario():
+    selUsuario = db.connection.cursor()
+    selUsuario.execute("SELECT * FROM usuario")
+    u = selUsuario.fetchall()
+    selUsuario.close()
+    return render_template('users.html', usuarios=u)
+
+@dreamybunnyApp.route('/iUsuario',methods = ['GET','POST'])
+def iUsuario():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        clave = request.form['clave']
+        perfil = request.form['perfil']
+        claveCifrada = generate_password_hash(clave)
+        regUsuario = db.connection.cursor()
+        regUsuario.execute("INSERT INTO usuario (nombre, correo, clave, perfil) VALUES (%s, %s, %s, %s)", (nombre.upper(), correo, claveCifrada, perfil))
+        db.connection.commit()
+        flash('Usuario registrado correctamente')
+        regUsuario.close()
+        return redirect(url_for('sUsuario'))
+    else:
+        return render_template('users.html')
+
+@dreamybunnyApp.route('/uUsuario/<int:id>',methods = ['GET','POST'])
+def uUsuario(id):
+    if request.method == 'POST':
+        id = request.form['id']
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        clave = request.form['clave']
+        perfil = request.form['perfil']
+        claveCifrada = generate_password_hash(clave)
+        actUsuario = db.connection.cursor()
+        actUsuario.execute("UPDATE usuario SET nombre=%s, correo=%s, clave=%s, perfil=%s WHERE id=%s", (nombre.upper(), correo, claveCifrada, perfil, id))
+        db.connection.commit()
+        flash('Usuario actualizado correctamente')
+        actUsuario.close()
+        return redirect(url_for('sUsuario'))
+    else:
+        return render_template('users.html')
+   
+@dreamybunnyApp.route('/dUsuario/<int:id>',methods = ['GET','POST'])
+def dUsuario(id):
+    if request.method == 'POST':
+        delUsuario = db.connection.cursor()
+        delUsuario.execute("DELETE FROM usuario WHERE id=%s", (id,))
+        db.connection.commit()
+        delUsuario.close()
+        flash('usuario eliminado')
+        return redirect(url_for('sUsuario'))
+    else:
+        return render_template('users.html')
 
 
-@dreamybunnyApp.route('s/Productos,methods= ['GET','POST'])
-def Sproductos():
+@dreamybunnyApp.route('/sProducto',methods= ['GET','POST'])
+@login_required
+def sProducto():
     selProducto = db.connection.cursor()
-    sellProducto.execute ("SELECT" * FROM usuario" )
+    selProducto.execute ("SELECT * FROM usuario" )
     p= selProducto.close()
     return render_template('productos.html',productos=p)
     
     
+if __name__ == '__main__':
+    dreamybunnyApp.run(port=3000, debug=True)
+
+

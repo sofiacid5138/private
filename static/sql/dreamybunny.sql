@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-04-2026 a las 17:30:15
--- Versión del servidor: 8.0.43
+-- Tiempo de generación: 20-04-2026 a las 16:38:23
+-- Versión del servidor: 8.0.45
 -- Versión de PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bunny` (
   `id` int NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `color` varchar(20) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `especialidad` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb3_spanish_ci NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `color` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `especialidad` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `precio` decimal(10,0) NOT NULL,
-  `estado` enum('disponible','agotado') COLLATE utf8mb3_spanish_ci NOT NULL DEFAULT 'disponible'
+  `estado` enum('disponible','agotado') CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL DEFAULT 'disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -57,10 +57,10 @@ INSERT INTO `bunny` (`id`, `nombre`, `color`, `especialidad`, `descripcion`, `pr
 
 CREATE TABLE `menu_bunny` (
   `id` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb3_spanish_ci DEFAULT NULL,
-  `categoria` varchar(50) COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+  `categoria` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
   `precio` decimal(10,0) DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb3_spanish_ci DEFAULT NULL
+  `imagen` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
@@ -102,9 +102,16 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `nombre` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `correo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `clave` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `clave` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'U'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
+(1, 'SOFIA', 'sofia.cid5138@alumnos.udg.mx', 'scrypt:32768:8:1$UiR9foyjMD2EnSMS$f6a46a0c48263a27dd761e7efecaedd21e02186bb08ea512db7f2a5c267554439e5e2c6be2b178ec6ca9d5b9f7bb410dec74bea9bc2cd1308cef3dd4afa110a3', 'A');
 
 --
 -- Índices para tablas volcadas
@@ -149,7 +156,7 @@ ALTER TABLE `menu_bunny`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,11 +18,10 @@
   Registrate
 </button>
 </a>
-<a href="#">
-      <!-- Button modal signin -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signinModal">
+<a href="/signin">
+
   Iniciar Sesion
-</button>
+
 </a>
     </nav>
   </header>
@@ -52,13 +51,24 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="/signup">
+      <form action="/signup" method="POST">
       <div class="modal-body">
-        ...
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+        <input type="text" name="nombre" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Correo electronico</label>
+  <input type="email" name="correo" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
+  <input type="password" name="clave" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
       </form>
     </div>
@@ -75,15 +85,15 @@
       <form action="/signin">
       <div class="modal-body">
         {% with mensajes = get_flashed_messages()%}
-          {% if mensajes = %}
+          {% if mensajes %}
         {% for m in  mensajes %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Holy guacamole!</strong> You should check in on some of those fields below.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-          {% endfor }
+          {% endfor %}
           {% endif %}
-        {% endwth %}
+        {% endwith %}
 
         <div class="input-group input-group-sm mb-3">
   <div class="input-group-prepend">
