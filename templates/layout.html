@@ -1,69 +1,176 @@
-<!-- templates/layout.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
-    <title>DreamyBunny</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
 
-    @font-face {
-      font-family: 'porkys';
-      src: url("{{ url_for('static',filename='font/porky.ttf')}}") format('truetype');
-    }
+<title>DreamyBunny</title>
 
-    body {
-      margin:0;
-      min-height:100vh;
-      background: linear-gradient(250deg,#f8cdda,#fde4ee);
-    }
+<style>
 
-    /* ===== HEADER CONTENEDOR ===== */
-    .header-container{
-      position:relative;
-      padding-top:90px; /* espacio para logo */
-    }
+/* ===== FUENTES ===== */
+@font-face {
+  font-family: 'porkys';
+  src: url("{{ url_for('static',filename='font/porky.ttf')}}");
+}
 
-    /* ===== LOGO (solo logo, no todas las img) ===== */
-    .logo{
-      position:absolute;
-      top:-30px;
-      left:50%;
-      transform:translateX(-50%);
-      width:100px; /* más pequeño */
-      z-index:10;
-    }
+@font-face {
+  font-family: 'cream';
+  src: url("{{ url_for('static',filename='font/cream.ttf')}}");
+}
 
-    /* ===== NAVBAR ===== */
-    nav.navbar{
-      margin-top:20px; /* ya no exagerado */
-    }
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:'cream';
+  background: linear-gradient(180deg,#cfe9e9,#f8cdda);
+}
 
-    /* ===== secciones ===== */
-    section {
-      margin: 90px auto;
-      padding: 45px;
-      max-width: 950px;
-      border-radius: 40px;
-    }
+/* ===== LOGO FLOTANTE ===== */
+.header-container{
+  position:relative;
+  padding-top:100px;
+}
 
-    </style>
+.logo{
+  position:absolute;
+  top:-50px;
+  left:50%;
+  transform:translateX(-50%);
+  width:160px;
+  z-index:10;
+}
+
+/* ===== NAVBAR ROSA ===== */
+.menu-bar{
+  background:#f48fb1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+  padding:15px;
+  border-radius:0 0 25px 25px;
+}
+
+.menu-bar a{
+  text-decoration:none;
+  color:white;
+  font-family:'porkys';
+  font-size:22px;
+}
+
+/* BOTÓN REGISTRO */
+.btn-registro{
+  background:#eee;
+  color:#f48fb1;
+  padding:10px 25px;
+  border-radius:30px;
+  font-family:'porkys';
+  border:none;
+}
+
+/* ===== CONTENEDOR BURBUJA ===== */
+.contenedor{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:40px;
+
+  background:#d1c4e9;
+  padding:40px;
+  border-radius:30px;
+  max-width:1100px;
+  margin:80px auto;
+
+  border:15px solid #f5f5f5;
+}
+
+/* TEXTO */
+.texto{
+  width:50%;
+}
+
+h2{
+  font-family:'porkys';
+  color:white;
+  font-size:42px;
+}
+
+/* CARRUSEL */
+.carrusel{
+  width:40%;
+}
+
+.carousel img{
+  border-radius:20px;
+}
+
+/* MODAL PERSONALIZADO */
+.modal-content{
+  border-radius:20px;
+  background:#fde4ee;
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="header-container">
 
-  <!-- LOGO CENTRADO -->
-  <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
+<!-- LOGO -->
+<img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
 
-  {% block contenido %}{% endblock %}
+<!-- NAVBAR -->
+<nav class="menu-bar">
+  <a href="#quienes">¿Quiénes somos?</a>
+  <a href="#reservas">Reservaciones</a>
+  <a href="#bunnys">Bunnys</a>
+  <a href="#menu">Menu</a>
+  <a href="#reglas">Reglas</a>
+
+  <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signupModal">
+    Regístrate
+  </button>
+
+  <a href="/signin">Iniciar sesión</a>
+</nav>
+
+{% block contenido %}{% endblock %}
 
 </div>
 
-<script src="{{ url_for('static',filename='/js/bootstrap.bundle.min.js')}}"></script>
+<!-- MODAL GLOBAL -->
+<div class="modal fade" id="signupModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5>Registro</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/signup" method="POST">
+        <div class="modal-body">
+
+          <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre">
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Crear cuenta</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
 
 </body>
 </html>
