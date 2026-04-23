@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
 
-<title>DreamyBunny</title>
+<title>{% block titulo %}DreamyBunny{% endblock %}</title>
 
 <style>
 
@@ -28,22 +28,48 @@ body{
   background: linear-gradient(180deg,#cfe9e9,#f8cdda);
 }
 
-/* ===== LOGO FLOTANTE ===== */
+/* ===== HEADER CONTENEDOR ===== */
 .header-container{
   position:relative;
   padding-top:100px;
 }
 
+/* ===== LOGO FLOTANTE (EFECTO JUEGO) ===== */
 .logo{
   position:absolute;
-  top:-50px;
+  top:-30px;
   left:50%;
   transform:translateX(-50%);
   width:160px;
   z-index:10;
+
+  animation: floatGame 2.5s ease-in-out infinite;
 }
 
-/* ===== NAVBAR ROSA ===== */
+/* 🎮 animación suave */
+@keyframes floatGame {
+  0%   { transform: translate(-50%, 0px); }
+  50%  { transform: translate(-50%, -12px); }
+  100% { transform: translate(-50%, 0px); }
+}
+
+/* ===== NAVBAR ===== */
+
+.menu-bar a,
+.menu-bar .btn-registro{
+  display:inline-block;
+  animation: jumpGame 1.8s ease-in-out infinite;
+}
+
+@keyframes jumpGame {
+  0%   { transform: translateY(0px); }
+  20%  { transform: translateY(-4px); }
+  40%  { transform: translateY(0px); }
+  60%  { transform: translateY(-3px); }
+  80%  { transform: translateY(0px); }
+  100% { transform: translateY(0px); }
+}
+
 .menu-bar{
   background:#f48fb1;
   display:flex;
@@ -61,7 +87,6 @@ body{
   font-size:22px;
 }
 
-/* BOTÓN REGISTRO */
 .btn-registro{
   background:#eee;
   color:#f48fb1;
@@ -71,19 +96,26 @@ body{
   border:none;
 }
 
-/* ===== CONTENEDOR BURBUJA ===== */
+.btn-iniciar-sesion{
+  background:#eee;
+  color:#f48fb1;
+  padding:10px 25px;
+  border-radius:30px;
+  font-family:'porkys';
+  border:none;
+}
+
+/* ===== CONTENEDOR ===== */
 .contenedor{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:40px;
-
   background:#d1c4e9;
   padding:40px;
   border-radius:30px;
   max-width:1100px;
   margin:80px auto;
-
   border:15px solid #f5f5f5;
 }
 
@@ -94,7 +126,7 @@ body{
 
 h2{
   font-family:'porkys';
-  color:white;
+  color:#f48fb1;
   font-size:42px;
 }
 
@@ -107,7 +139,7 @@ h2{
   border-radius:20px;
 }
 
-/* MODAL PERSONALIZADO */
+/* MODAL */
 .modal-content{
   border-radius:20px;
   background:#fde4ee;
@@ -120,30 +152,34 @@ h2{
 
 <div class="header-container">
 
-<!-- LOGO -->
-<img src="{{ url_for('static', filename='img/logo.png') }}" class="logo">
+<!-- ✅ LOGO -->
+<img src="{{ url_for('static', filename='img/logo.png') }}" class="logo" alt="logo">
 
-<!-- NAVBAR -->
+<!-- ✅ NAVBAR -->
+
+
 <nav class="menu-bar">
   <a href="#quienes">¿Quiénes somos?</a>
   <a href="#reservas">Reservaciones</a>
   <a href="#bunnys">Bunnys</a>
-  <a href="#menu">Menu</a>
+  <a href="#menu">Menú</a>
   <a href="#reglas">Reglas</a>
 
   <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signupModal">
     Regístrate
   </button>
 
-  <a href="/signin">Iniciar sesión</a>
+<a href="/signin" class="btn-iniciar-sesion">Iniciar sesión</a>
+
 </nav>
 
+<!-- 🔽 CONTENIDO DINÁMICO -->
 {% block contenido %}{% endblock %}
 
 </div>
 
-<!-- MODAL GLOBAL -->
-<div class="modal fade" id="signupModal">
+<!-- ✅ MODAL (solo uno, global) -->
+<div class="modal fade" id="signupModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
 
