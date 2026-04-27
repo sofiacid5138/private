@@ -163,8 +163,7 @@ def sProducto():
     selProducto.execute ("SELECT * FROM usuario" )
     p= selProducto.close()
     return render_template('productos.html',productos=p)
-    
-    
+
 if __name__ == '__main__':
     dreamybunnyApp.run(port=3000, debug=True)
 

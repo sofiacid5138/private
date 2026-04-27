@@ -113,6 +113,111 @@
   transform:scale(1.2);
 }
 
+/* 🌸 ===== QUIÉNES SOMOS ===== */
+
+#quienes{
+  padding-top:40px;
+}
+
+.quienes-container{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:40px;
+  margin-top:20px;
+  padding:40px;
+}
+
+/* 💖 CAJA TEXTO */
+.quienes-box{
+  width:50%;
+  background: rgba(244,143,177,0.25);
+  padding:30px;
+  border-radius:25px;
+  backdrop-filter: blur(6px);
+
+  color:white;
+  text-align:left;
+
+  animation: fadeUp 1.2s ease;
+}
+
+/* 🎀 TITULO */
+.quienes-box h2{
+  color:#f48fb1;
+  font-family:'porkys';
+  font-size:45px;
+
+  animation: bounceKawaii 2s infinite;
+}
+
+/* 🧁 TEXTO */
+.quienes-box p{
+  color:white;
+  font-size:18px;
+  line-height:1.6;
+}
+
+/* 🎮 IMÁGENES */
+.quienes-img{
+  width:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  height:500px; /* 👈 clave para que se vea bien */
+}
+
+/* 🖼️ IMAGENES */
+.img-game{
+  width:520px;
+  max-width:100%;
+  height:auto;
+
+  border-radius:20px;
+
+  position:absolute;
+  opacity:0;
+  transform:scale(0.9);
+
+  transition:opacity 1s ease, transform 1s ease;
+
+  filter: drop-shadow(0 0 20px #f48fb1);
+}
+
+/* activa */
+.img-game.active{
+  opacity:1;
+  transform:scale(1);
+  z-index:2;
+}
+
+/* ✨ animaciones */
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes bounceKawaii{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+}
+}
+
+<script>
+const images = document.querySelectorAll('.img-game');
+
+let index = 0;
+
+function changeImage(){
+  images[index].classList.remove('active');
+  index = (index + 1) % images.length;
+  images[index].classList.add('active');
+}
+
+setInterval(changeImage, 2500);
+</script>
+
 /* ===== FUENTES ===== */
 @font-face {
   font-family: 'porkys';
@@ -210,7 +315,71 @@ body{
   border:none;
 }
 
+/* ===== RESERVAS ===== */
 
+#reservas{
+  padding-top:40px;
+}
+
+.reservas-container{
+  display:flex;
+  justify-content:center;
+  padding:40px;
+}
+
+.reservas-box{
+  width:60%;
+  background: rgba(244,143,177,0.25);
+  padding:30px;
+  border-radius:25px;
+  backdrop-filter: blur(6px);
+  color:white;
+  animation: fadeUp 1.2s ease;
+}
+
+.reservas-box h2{
+  color:#f48fb1;
+  font-family:'porkys';
+  animation:bounceKawaii 2s infinite;
+}
+
+.reservas-box p{
+  font-size:18px;
+  line-height:1.6;
+}
+
+/* BOTONES */
+.reservas-botones{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:20px;
+}
+
+.btn-bunny,
+.btn-menu{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  font-family:'porkys';
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn-bunny{
+  background:#f48fb1;
+  color:white;
+}
+
+.btn-menu{
+  background:#8fffe6;
+  color:white;
+}
+
+.btn-bunny:hover,
+.btn-menu:hover{
+  transform:scale(1.1);
+}
 /* ===== CONTENEDOR ===== */
 .contenedor{
   display:flex;
@@ -280,6 +449,7 @@ h2{
   </button>
 
 
+
 </nav>
 
 
@@ -318,6 +488,20 @@ h2{
 </div>
 
 <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
+<!-- 🔥 JAVASCRIPT (CORRECTO AQUÍ ABAJO) -->
+<script>
+const images = document.querySelectorAll('.img-game');
+let index = 0;
 
+setInterval(() => {
+  if(images.length === 0) return;
+
+  images[index].classList.remove('active');
+  index = (index + 1) % images.length;
+  images[index].classList.add('active');
+}, 2500);
+</script>
+
+<script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>

@@ -7,22 +7,41 @@
     </nav>
   </header>
 
-  <section id="quienes">
-    <h2>¿Quiénes somos?</h2>
-    <p>
-      Nosotr@s somos <strong>Dreamy bunny house cafe!</strong>, pero te preguntarás…<br><br>
+<section id="quienes">
 
-      ¿Qué es dreamy bunny house cafe? es muy fácil.<br>
-      somos una cafetería temática tipo maid cafe, donde todas las meseras son maids
-      con estilo conejita bunny, inspiradas en una estética kawaii y muy encantadora.<br><br>
+  <div class="quienes-container">
 
-      Nuestro objetivo es ofrecer una experiencia divertida y respetuosa,
-      acompañada de café y postres.<br><br>
+    <!-- 💖 TEXTO -->
+    <div class="quienes-box">
+      <h2>¿Quiénes somos?</h2>
+      <p>
+        Nosotr@s somos <strong>Dreamy bunny house cafe!</strong>, pero te preguntarás…<br><br>
 
-      ¡Después de esta breve explicación, qué puedes esperar!
-      ¡Puedes reservar ahora!
-    </p>
-  </section>
+        ¿Qué es dreamy bunny house cafe? es muy fácil.<br>
+        somos una cafetería temática tipo maid cafe, donde todas las meseras son maids
+        con estilo conejita bunny, inspiradas en una estética kawaii y muy encantadora.<br><br>
+
+        Nuestro objetivo es ofrecer una experiencia divertida y respetuosa,
+        acompañada de café y postres.<br><br>
+
+        ¡Después de esta breve explicación, qué puedes esperar!
+        ¡Puedes reservar ahora!
+      </p>
+    </div>
+
+    <!-- 🎮 IMÁGENES -->
+    <div class="quienes-img">
+      <img src="{{ url_for('static', filename='img/posesone.png') }}" class="img-game active">
+      <img src="{{ url_for('static', filename='img/posestwo.png') }}" class="img-game">
+    </div>
+
+  </div>
+
+
+</div>
+
+</section>
+</section>
   
   <!-- 🌸 MODAL REGISTRO -->
 <div class="modal fade" id="signupModal" tabindex="-1">
