@@ -10,6 +10,109 @@
 
 <style>
 
+/* 🌸 ===== MODAL KAWAII COMPLETO ===== */
+
+/* CONTENEDOR */
+.modal-content{
+  border-radius:20px;
+  background:#fde4ee;
+  border:none;
+}
+
+/* TÍTULO */
+.modal-header h5{
+  color:#f48fb1;
+  font-family:'porkys';
+}
+
+/* TEXTO GENERAL */
+.modal-body{
+  color:#6a1b9a;
+}
+
+/* LABELS */
+.modal-body label{
+  color:#ec6f9e;
+  font-family:'porkys';
+}
+
+/* INPUTS */
+.modal-body input{
+  border-radius:15px;
+  border:2px solid #f8bbd0;
+  color:#6a1b9a;
+}
+
+/* EFECTO AL ESCRIBIR */
+.modal-body input:focus{
+  border-color:#f48fb1;
+  box-shadow:0 0 6px #f48fb1;
+}
+
+/* PLACEHOLDER */
+.modal-body input::placeholder{
+  color:#f8a5c2;
+}
+
+/* 💖 BOTONES */
+.modal-footer .btn{
+  border-radius:25px;
+  font-family:'porkys';
+  padding:8px 20px;
+  transition: all 0.3s ease;
+}
+
+/* BOTÓN PRINCIPAL */
+.modal-footer .btn-primary{
+  background:#f48fb1;
+  border:none;
+  color:white;
+}
+
+.modal-footer .btn-primary:hover{
+  background:#ec6f9e;
+  transform:scale(1.05);
+}
+
+/* BOTÓN SECUNDARIO */
+.modal-footer .btn-secondary{
+  background:#8fffe6;
+  border:none;
+  color:white;
+}
+
+.modal-footer .btn-secondary:hover{
+  background: #8fffe6;
+  transform:scale(1.05);
+}
+
+/* 💌 MENSAJES DE ERROR */
+.alert{
+  background:#f8bbd0;
+  color:#880e4f;
+  border:none;
+  border-radius:15
+}
+
+/* ❌ X ROSA FUERTE PERSONALIZADA */
+.btn-close{
+  background-image: none;
+  opacity: 1;
+  position: relative;
+}
+
+.btn-close::before{
+  content: "✕";
+  font-size:20px;
+  color:#f48fb1;
+}
+
+/* ✨ HOVER DE LA X */
+.btn-close:hover::before{
+  color:#ec407a;
+  transform:scale(1.2);
+}
+
 /* ===== FUENTES ===== */
 @font-face {
   font-family: 'porkys';
@@ -87,6 +190,17 @@ body{
   font-size:22px;
 }
 
+.btn-iniciar-sesion{
+  background:#eee !important;
+  color:#f48fb1 !important;
+  padding:8px 15px; /* 👈 igual que registro */
+  border-radius:30px !important;
+  font-family:'porkys';
+  border:none;
+  text-decoration:none !important;
+  display:inline-block;
+  font-size:5x; /* 👈 AJUSTA esto si sigue grande */
+}
 .btn-registro{
   background:#eee;
   color:#f48fb1;
@@ -96,14 +210,6 @@ body{
   border:none;
 }
 
-.btn-iniciar-sesion{
-  background:#eee;
-  color:#f48fb1;
-  padding:10px 25px;
-  border-radius:30px;
-  font-family:'porkys';
-  border:none;
-}
 
 /* ===== CONTENEDOR ===== */
 .contenedor{
@@ -165,13 +271,18 @@ h2{
   <a href="#menu">Menú</a>
   <a href="#reglas">Reglas</a>
 
+  <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signinModal">
+  Iniciar sesión
+</button>
+
   <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signupModal">
     Regístrate
   </button>
 
-<a href="/signin" class="btn-iniciar-sesion">Iniciar sesión</a>
 
 </nav>
+
+
 
 <!-- 🔽 CONTENIDO DINÁMICO -->
 {% block contenido %}{% endblock %}
