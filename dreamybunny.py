@@ -6,27 +6,33 @@ from werkzeug.security import generate_password_hash
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
+from flask_mail import Mail, Message
 
 dreamybunnyApp = Flask(__name__)
 
-# Configuración de la base de datos
+# ✅ CONFIGURACIÓN PRIMERO
 dreamybunnyApp.config.from_object(config['development'])
+dreamybunnyApp.config.from_object(config['mail'])
+
+# ✅ LUEGO MAIL
+mail = Mail(dreamybunnyApp)
+
+# Configuración de la base de datos
 db = MySQL(dreamybunnyApp)
 
 # Configuración del LoginManager
 adminUsuarios = LoginManager(dreamybunnyApp)
-adminUsuarios.login_view = 'signin' # A dónde redirigir si no ha iniciado sesión
+adminUsuarios.login_view = 'signin'
 
 @adminUsuarios.user_loader
 def cargarUsuario(id):
-    """Carga el usuario desde la base de datos usando su ID."""
     return ModelUser.get_by_id(db, int(id))
+
 
 # --- RUTAS DE LA APLICACIÓN ---
 
 @dreamybunnyApp.route('/')
 def home():
-    """Página de inicio."""
     return render_template('home.html')
 
 @dreamybunnyApp.route('/menu')
@@ -39,24 +45,47 @@ def bunnys():
 
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
-    """Página de registro de nuevos usuarios."""
     if request.method == 'POST':
-        # Validación básica para que no haya campos vacíos
+
         if not request.form['nombre'] or not request.form['correo'] or not request.form['clave']:
             flash("Por favor, completa todos los campos.", "warning")
             return redirect(url_for('signup'))
             
         clave_cifrada = generate_password_hash(request.form['clave'])
-        # Creamos el objeto usuario
+
         nuevo_usuario = User(
             id=None,
-            perfil='U', # Perfil de usuario por defecto
+            perfil='U',
             nombre=request.form['nombre'],
             correo=request.form['correo'],
             clave=clave_cifrada
         )
-        
-        # Intentamos registrar al usuario
+
+        # ✅ GUARDAR USUARIO
+        regUsuario = db.connection.cursor()
+        regUsuario.execute(
+            "INSERT INTO usuario (nombre, correo, clave, perfil) VALUES (%s, %s, %s, %s)",
+            (nuevo_usuario.nombre.upper(), nuevo_usuario.correo, nuevo_usuario.clave, nuevo_usuario.perfil)
+        )
+        db.connection.commit()
+        regUsuario.close()
+
+        # ✅ CREAR MENSAJE (con sender)
+        msg = Message(
+            subject='Bienvenido a Dreamy Bunny',
+            sender=dreamybunnyApp.config['MAIL_USERNAME'],
+            recipients=[request.form['correo']]
+        )
+
+        # ✅ PASAR OBJETO COMPLETO
+        msg.html = render_template('mail.html', usuario=nuevo_usuario)
+
+        # ✅ ENVIAR CORREO
+        mail.send(msg)
+
+        return render_template('signin.html')
+
+        # (tu código original queda igual, aunque no se ejecuta)
         registrado = ModelUser.signup(db, nuevo_usuario)
         
         if registrado:
@@ -65,18 +94,19 @@ def signup():
         else:
             flash("El correo ya está en uso. Intenta con otro.", "danger")
             return redirect(url_for('signup'))
+
     else:
         return render_template('signup.html')
 
+
 @dreamybunnyApp.route('/signin', methods=['GET', 'POST'])
 def signin():
-    """Página de inicio de sesión."""
     if request.method == 'POST':
         usuario = User(id=None, perfil=None, nombre=None, correo=request.form['correo'], clave=request.form['clave'])
         usuario_autenticado = ModelUser.signin(db, usuario)
 
         if usuario_autenticado:
-            login_user(usuario_autenticado) # Aquí Flask-Login hace su magia
+            login_user(usuario_autenticado)
             flash(f"¡Bienvenido de nuevo, {usuario_autenticado.nombre}!", "info")
             if usuario_autenticado.perfil == 'A':
                 return redirect(url_for('admin_page'))
@@ -86,12 +116,12 @@ def signin():
             flash("Correo o contraseña incorrectos. Inténtalo de nuevo.", "danger")
             return redirect(url_for('signin'))
     else:
-        return render_template('signin.html') # Asumiendo que tienes un signin.html
+        return render_template('signin.html')
+
 
 @dreamybunnyApp.route('/logout')
 @login_required
 def logout():
-    """Cierra la sesión del usuario."""
     logout_user()
     flash("Has cerrado sesión.", "info")
     return redirect(url_for('home'))
@@ -99,14 +129,12 @@ def logout():
 @dreamybunnyApp.route('/admin')
 @login_required
 def admin_page():
-    """Página para administradores."""
     return render_template('admin.html')
 
 @dreamybunnyApp.route('/usuario')
 @login_required
 def user_page():
-    """Página para usuarios normales."""
-    return render_template('user.html') # Asumiendo que tienes un user.html
+    return render_template('user.html')
 
 @dreamybunnyApp.route('/sUsuario',methods = ['GET','POST'])
 def sUsuario():
@@ -163,7 +191,6 @@ def dUsuario(id):
     else:
         return render_template('users.html')
 
-
 @dreamybunnyApp.route('/sProducto',methods= ['GET','POST'])
 @login_required
 def sProducto():
@@ -174,5 +201,4 @@ def sProducto():
 
 if __name__ == '__main__':
     dreamybunnyApp.run(port=3000, debug=True)
-
 
