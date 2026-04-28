@@ -29,6 +29,14 @@ def home():
     """Página de inicio."""
     return render_template('home.html')
 
+@dreamybunnyApp.route('/menu')
+def menu():
+    return render_template('menu.html')
+
+@dreamybunnyApp.route('/bunnys')
+def bunnys():
+    return render_template('bunnys.html')
+
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
     """Página de registro de nuevos usuarios."""

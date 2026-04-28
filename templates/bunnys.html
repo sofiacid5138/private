@@ -1,0 +1,273 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+
+<h2 class="titulo-seccion">Nuestras Bunnys 🐰</h2>
+
+<style>
+
+/* 🌸 CONTENEDOR */
+.bunny-section{
+  padding:60px;
+  text-align:center;
+}
+
+/* 🐰 GRID */
+.bunny-grid{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+/* 🎀 TITULO CENTRADO + ANIMACIÓN */
+.titulo-seccion{
+  text-align:center;
+  animation: floatTitle 2s infinite ease-in-out;
+}
+
+/* ✨ animación del título */
+@keyframes floatTitle{
+  0%{ transform:translateY(3px); }
+  50%{ transform:translateY(-5px); }
+  100%{ transform:translateY(3px); }
+}
+
+/* 🍓 CARDS ARCOÍRIS */
+.bunny-card{
+  width:320px;
+  border-radius:25px;
+  border:none;
+
+  background: linear-gradient(135deg,#ffffff,#ffe4ec,#e0ffff);
+
+  animation: floatCard 3s infinite ease-in-out;
+  transition:0.3s;
+}
+
+/* ✨ animación flotante */
+@keyframes floatCard{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(-8px); }
+  100%{ transform:translateY(0); }
+}
+
+/* 💥 HOVER SIN ROMPER SALTO */
+.bunny-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #f48fb1, 0 0 30px #8fffe6;
+}
+
+/* 🖼️ IMAGEN */
+.bunny-img{
+  height:500px;
+  object-fit:contain;
+  padding:10px;
+}
+
+/* 💥 SALTO (SE MANTIENE) */
+.bunny-card:hover .bunny-img{
+  animation: bunnyJump 0.5s ease;
+}
+
+@keyframes bunnyJump{
+  0%{ transform: translateY(0); }
+  30%{ transform: translateY(-15px); }
+  60%{ transform: translateY(5px); }
+  100%{ transform: translateY(0); }
+}
+
+/* 💖 PRECIO */
+.precio{
+  font-size:18px;
+  color:#ec6f9e;
+  font-family:'porkys';
+  margin-top:10px;
+}
+
+/* 💕 BOTÓN GENERAL */
+.btn-reservar{
+  border:none;
+  border-radius:25px;
+  padding:10px 20px;
+  font-family:'porkys';
+  color:white;
+  margin-top:10px;
+  transition:0.3s;
+}
+
+/* 💗 HINA */
+.btn-hina{
+  background:#f48fb1;
+}
+.btn-hina:hover{
+  background:#ec407a;
+  transform:scale(1.1);
+}
+
+/* 💙 NAMI */
+.btn-nami{
+  background:#64b5f6;
+}
+.btn-nami:hover{
+  background:#1e88e5;
+  transform:scale(1.1);
+}
+
+/* 🖤 YORU */
+.btn-yoru{
+  background:#444;
+}
+.btn-yoru:hover{
+  background:#000;
+  transform:scale(1.1);
+}
+
+.texto-bunny{
+  text-align:center;
+  color:white;
+  font-size:20px;
+  margin-bottom:30px;
+
+  animation: floatText 3s ease-in-out infinite, glowPink 2s infinite alternate;
+}
+
+/* 🌸 flotando */
+@keyframes floatText{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(-6px); }
+  100%{ transform:translateY(0); }
+}
+
+/* 💖 brillo neón rosita */
+@keyframes glowPink{
+  0%{
+    text-shadow: 0 0 5px #f48fb1;
+  }
+  100%{
+    text-shadow: 0 0 10px #ff80ab, 0 0 20px #f48fb1, 0 0 30px #ec6f9e;
+  }
+}
+
+</style>
+<div class="bunny-section">
+  <div class="bunny-grid">
+
+    <p class="texto-bunny">
+  Aquí puedes elegir y reservar a tu Bunny favorita para recibir una atención personalizada, delicada y llena de encanto 💖🐰
+  Disfruta una experiencia única, encantadora y con todo el estilo kawaii, donde cada detalle está pensado para consentirte con dulzura, magia y ternura ✨🎀
+</p>
+
+    <!-- HINA -->
+    <div class="card kawaii-card bunny-card">
+      <img src="{{ url_for('static', filename='img/hina.png') }}" class="card-img-top bunny-img">
+      <div class="card-body">
+        <h5 class="card-title">Hina Bunny 💗</h5>
+        <p class="card-text">
+          Maid dulce y delicada, siempre sonriente y experta en detalles kawaii 🎀<br><br>
+          💕 Personalidad: tímida y cariñosa<br>
+          🍰 Rol: preparación de alimentos / decoración de postres / bienvenida
+        </p>
+        <p class="precio">$130</p>
+        <button class="btn-reservar btn-hina">Reservar a Hina</button>
+      </div>
+    </div>
+
+    <!-- NAMI -->
+    <div class="card kawaii-card bunny-card">
+      <img src="{{ url_for('static', filename='img/nami.png') }}" class="card-img-top bunny-img">
+      <div class="card-body">
+        <h5 class="card-title">Nami Bunny 💙</h5>
+        <p class="card-text">
+          Alegre y energética, especialista en bebidas y ambiente divertido 🧋<br><br>
+          💫 Personalidad: extrovertida y divertida<br>
+          🧋 Rol: preparación de bebidas / smoothies / entretenimiento
+        </p>
+        <p class="precio">$110</p>
+        <button class="btn-reservar btn-nami">Reservar a Nami</button>
+      </div>
+    </div>
+
+    <!-- YORU -->
+    <div class="card kawaii-card bunny-card">
+      <img src="{{ url_for('static', filename='img/yoru.png') }}" class="card-img-top bunny-img">
+      <div class="card-body">
+        <h5 class="card-title">Yoru Bunny 🖤</h5>
+        <p class="card-text">
+          Misteriosa y elegante, mantiene el orden y supervisa el servicio 🖤<br><br>
+          🖤 Personalidad: agresiva, elegante y sofisticada<br>
+          🍽️ Rol: atención de mesas / supervisión / caja
+        </p>
+        <p class="precio">$125</p>
+        <button class="btn-reservar btn-yoru">Reservar a Yoru</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <!-- 🌸 MODAL REGISTRO -->
+<div class="modal fade" id="signupModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Crear cuenta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/signup" method="POST">
+        <div class="modal-body">
+
+          <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre">
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Registrarme</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- 🌸 MODAL INICIAR SESIÓN -->
+<div class="modal fade" id="signinModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Iniciar sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/signin" method="POST">
+        <div class="modal-body">
+
+          {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+              {% for m in mensajes %}
+                <div class="alert alert-danger">{{ m }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

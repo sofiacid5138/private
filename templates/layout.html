@@ -158,6 +158,10 @@
   line-height:1.6;
 }
 
+.quienes-box p {
+  animation: textGame 2s infinite;
+}
+
 /* 🎮 IMÁGENES */
 .quienes-img{
   width:50%;
@@ -202,6 +206,20 @@
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-6px);}
 }
+
+@keyframes textGame {
+  0% {
+    transform: translateY(0px);
+    text-shadow: 0 0 5px #f48fb1;
+  }
+  50% {
+    transform: translateY(-2px);
+    text-shadow: 0 0 15px #ff80ab, 0 0 25px #f48fb1;
+  }
+  100% {
+    transform: translateY(0px);
+    text-shadow: 0 0 5px #f48fb1;
+  }
 }
 
 <script>
@@ -432,23 +450,21 @@ h2{
 
 <!-- ✅ NAVBAR -->
 
-
 <nav class="menu-bar">
-  <a href="#quienes">¿Quiénes somos?</a>
-  <a href="#reservas">Reservaciones</a>
-  <a href="#bunnys">Bunnys</a>
-  <a href="#menu">Menú</a>
-  <a href="#reglas">Reglas</a>
 
+  <a href="{{ url_for('home') }}#quienes">¿Quiénes somos?</a>
+  <a href="{{ url_for('bunnys') }}">Bunnys</a>
+  <a href="{{ url_for('menu') }}">Menú</a>
+  <a href="{{ url_for('sUsuario') }}">Usuarios</a>
+
+  <!-- BOTONES -->
   <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signinModal">
-  Iniciar sesión
-</button>
+    Iniciar sesión
+  </button>
 
   <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signupModal">
     Regístrate
   </button>
-
-
 
 </nav>
 

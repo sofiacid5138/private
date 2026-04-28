@@ -1,0 +1,333 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+
+<section class="menu-main">
+
+  <!-- 💖 INTRO -->
+  <div class="menu-intro">
+    <h2>Menú Dreamy Bunny 🍓</h2>
+    <p>
+      Aquí encontrarás todos nuestros deliciosos platillos, postres y bebidas
+      diseñados especialmente para ti 💕✨
+      Cada opción está hecha con amor para darte una experiencia mágica y kawaii.
+    </p>
+  </div>
+
+  <!-- 🥞 PANCAKES -->
+<h2 class="titulo-seccion">Pancakes 🥞</h2>
+<div class="menu-grid">
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pan1.png') }}">
+<div class="card-body">
+<h5 class="card-title">Pancakes Bunny Clásico — $80</h5>
+<p>Esponjosos y doraditos, con una carita de conejo hecha de mantequilla.</p>
+</div>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pan2.png') }}">
+<div class="card-body">
+<h5>Pancakes Rosa Delicado — $85</h5>
+<p>Bañados en una suave crema de fresas que les da un toque mágico y rosado.</p>
+</div>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pan3.png') }}">
+<div class="card-body">
+<h5>Pancakes Bunny Arándanos — $90</h5>
+<p>Rellenos de frutitas azules que explotan de sabor en cada bocado.</p>
+</div>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pan4.png') }}">
+<div class="card-body">
+<h5>Pancakes Bunny Chocolate — $95</h5>
+<p>Masa de chocolate oscuro con chispas dulces para un abrazo al corazón.</p>
+</div>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pan5.png') }}">
+<div class="card-body">
+<h5>Pancakes Bunny Matcha — $90</h5>
+<p>Un toque zen y verde pastel con el aroma relajante del té matcha.</p>
+</div>
+</div>
+
+</div>
+
+
+<!-- 🍽️ COMIDAS -->
+<h2 class="titulo-seccion">Comidas 🍱</h2>
+<div class="menu-grid">
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida1.png') }}">
+<h5>Desayuno Bunny Completo — $120</h5>
+<p> El combo perfecto con huevo, tocino y panecillos para empezar el día con energía</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida2.png') }}">
+<h5>Tostada Bunny Aguacate — $95</h5>
+<p>Pan crujiente con aguacate cremoso y detalles de rabanitos.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida3.png') }}">
+<h5>Mini Burgers Bunny — $110</h5>
+<p> Hamburguesas pequeñitas con orejitas de pan, ¡son casi demasiado lindas para comer!</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida4.png') }}">
+<h5>Brunch Bunny — $130</h5>
+<p> Una selección especial de salados y dulces para disfrutar sin prisas.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida5.png') }}">
+<h5>Ensalada Cute Bunny — $85</h5>
+<p>Vegetales frescos y coloridos cortados con formas divertidas y nutritivas.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/comida6.png') }}">
+<h5>Sopa Cute Bunny — $75</h5>
+<p> Un caldito calientito que te hace sentir bien, servido en un tazón de conejito.</p>
+</div>
+
+</div>
+
+
+<!-- 🍰 POSTRES -->
+<h2 class="titulo-seccion">Postres 🍰</h2>
+<div class="menu-grid">
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos1.png') }}">
+<h5>Parfait Bunny Dreams — $70</h5>
+<p>Capas de yogurt, granola y fruta que parecen nubes en un vasito.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos2.png') }}">
+<h5>Pastelitos Bunny — $65</h5>
+<p>Mini bizcochos decorados con betún suave y chispas de colores.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos3.png') }}">
+<h5>Cupcakes Bunny Gemelos — $75</h5>
+<p>Mini bizcochos decorados con betún suave y chispas de colores.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos4.png') }}">
+<h5>Tartaleta de Frutas Bunny — $80</h5>
+<p>Una base crujiente rellena de crema y joyitas de frutas frescas.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos5.png') }}">
+<h5>Donas Bunny Glasé — $60</h5>
+<p>Rosquillas brillantes con glaseado espejo y detalles de chocolate.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/pos6.png') }}">
+<h5>Gelato Bunny — $70</h5>
+<p> Una bola de helado súper fría con orejitas de galleta crujiente.</p>
+</div>
+
+</div>
+
+
+<!-- 🧋 BEBIDAS -->
+<h2 class="titulo-seccion">Bebidas 🧋</h2>
+<div class="menu-grid">
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/be1.png') }}">
+<h5>Soda Bubble Mint — $50</h5>
+<p>Refrescante burbujeo de menta con perlas que bailan en el fondo.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/be2.png') }}">
+<h5>Soda Bubble Berries — $55</h5>
+<p>Una explosión dulce de frutos rojos con burbujas divertidas.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/be3.png') }}">
+<h5>Chocolate Bunny Caliente — $60</h5>
+<p>Leche chocolatosa con una montaña de bombones flotantes.</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/be4.png') }}">
+<h5>Smoothie Bunny Melón — $60</h5>
+<p>Granizado de melón dulce, tan fresquito como una brisa de verano.
+</p>
+</div>
+
+<div class="card kawaii-card">
+<img src="{{ url_for('static', filename='img/be5.png') }}">
+<h5>Café Frío Bunny — $55</h5>
+<p>Tu dosis de cafeína bien helada y decorada con crema batida.
+</p>
+</div>
+
+</div>
+  </div>
+
+</section>
+
+<style>
+
+/* 🌸 CONTENEDOR */
+.menu-main{
+  padding:60px;
+}
+
+/* 💖 INTRO */
+.menu-intro{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.menu-intro h2{
+  color:#ec6f9e;
+  font-family:'porkys';
+  animation: bounceKawaii 2s infinite;
+}
+
+.menu-intro p{
+  color:white;
+  font-size:18px;
+  animation: textGame 2s infinite;
+}
+
+/* 🎀 TITULOS SECCION */
+.titulo-seccion{
+  color:#ec6f9e;
+  font-family:'porkys';
+  margin-top:50px;
+  margin-bottom:20px;
+
+  animation: floatCards 2s infinite;
+}
+
+/* 🧁 GRID */
+.menu-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:25px;
+}
+
+/* 🍓 CARDS */
+.kawaii-card{
+  background: linear-gradient(135deg,#ffffff,#ffe4ec,#e0ffff);
+  border:none;
+  border-radius:25px;
+  overflow:hidden;
+
+  transition:0.3s;
+
+  animation: floatCards 3s infinite ease-in-out;
+}
+
+/* 🖼️ IMAGEN */
+.kawaii-card img{
+  height:200px;
+  object-fit:cover;
+}
+
+/* ✨ HOVER */
+.kawaii-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #f48fb1, 0 0 30px #8fffe6;
+}
+
+/* 🎮 ANIMACION TIPO VIDEOJUEGO */
+@keyframes floatCards{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
+}
+
+</style>
+
+  
+  <!-- 🌸 MODAL REGISTRO -->
+<div class="modal fade" id="signupModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Crear cuenta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/signup" method="POST">
+        <div class="modal-body">
+
+          <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre">
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Registrarme</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- 🌸 MODAL INICIAR SESIÓN -->
+<div class="modal fade" id="signinModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Iniciar sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/signin" method="POST">
+        <div class="modal-body">
+
+          {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+              {% for m in mensajes %}
+                <div class="alert alert-danger">{{ m }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
