@@ -2,10 +2,10 @@ from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
-
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
+
 from flask_mail import Mail, Message
 
 dreamybunnyApp = Flask(__name__)
@@ -43,6 +43,8 @@ def menu():
 def bunnys():
     return render_template('bunnys.html')
 
+
+
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -70,33 +72,27 @@ def signup():
         db.connection.commit()
         regUsuario.close()
 
-        # ✅ CREAR MENSAJE (con sender)
+        # ✅ CREAR CORREO
         msg = Message(
-            subject='Bienvenido a Dreamy Bunny',
+            subject='Bienvenido a Dreamy Bunny 💖',
             sender=dreamybunnyApp.config['MAIL_USERNAME'],
             recipients=[request.form['correo']]
         )
 
-        # ✅ PASAR OBJETO COMPLETO
         msg.html = render_template('mail.html', usuario=nuevo_usuario)
 
-        # ✅ ENVIAR CORREO
-        mail.send(msg)
+        # ✅ ENVIAR CORREO (CON SEGURIDAD)
+        try:
+            mail.send(msg)
+            flash("Te enviamos un correo de bienvenida 💌", "success")
+        except Exception as e:
+            print("ERROR MAIL:", e)
+            flash("Usuario creado pero no se pudo enviar el correo ", "warning")
 
-        return render_template('signin.html')
+        flash("Registro exitoso 🎉", "success")
+        return redirect(url_for('signin'))
 
-        # (tu código original queda igual, aunque no se ejecuta)
-        registrado = ModelUser.signup(db, nuevo_usuario)
-        
-        if registrado:
-            flash("¡Registro exitoso! Ahora puedes iniciar sesión.", "success")
-            return redirect(url_for('signin'))
-        else:
-            flash("El correo ya está en uso. Intenta con otro.", "danger")
-            return redirect(url_for('signup'))
-
-    else:
-        return render_template('signup.html')
+    return render_template('signup.html')
 
 
 @dreamybunnyApp.route('/signin', methods=['GET', 'POST'])
@@ -195,10 +191,27 @@ def dUsuario(id):
 @login_required
 def sProducto():
     selProducto = db.connection.cursor()
-    selProducto.execute ("SELECT * FROM usuario" )
-    p= selProducto.close()
+    selProducto.execute("SELECT * FROM usuario")
+    p = selProducto.close()
     return render_template('productos.html',productos=p)
 
+@dreamybunnyApp.route('/iProducto',methods= ['GET','POST'])
+def iProducto():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        precio = request.form['precio']
+        imagen = request.form['imagen']
+        if imagen and imagen.filename :
+            nombre_imagen = imagen.filename
+            imagen.save(os.path.join('static/images', nombre_imagen))
+            NuevoProducto = db.connection.cursor()
+        NuevoProducto.execute("INSERT INTO producto (nombre, descripcion, precio, imagen) VALUES (%s, %s, %s, %s)", (nombre.upper(), descripcion, precio, imagen))
+        db.connection.commit()
+        flash('Producto registrado correctamente')
+        NuevoProducto.close()
+        return redirect(url_for('sProducto'))
+    else:
+        return render_template('productos.html')
 if __name__ == '__main__':
     dreamybunnyApp.run(port=3000, debug=True)
-
