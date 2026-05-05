@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+<h2>Tu carrito 🛒</h2>
+
+<div id="cart-items"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const container = document.getElementById("cart-items");
+
+cart.forEach(p => {
+  container.innerHTML += `
+    <div>
+      <img src="${p.img}" width="100">
+      <h4>${p.nombre}</h4>
+      <p>${p.precio}</p>
+    </div>
+  `;
+});
+</script>
+
+{% endblock %}

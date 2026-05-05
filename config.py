@@ -13,7 +13,7 @@ class MailConfig:
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
     MAIL_USERNAME = 'sofiacid5138@alumnos.udg.mx'
-    MAIL_PASSWORD = 'kmardrizhpxgeasa'
+    MAIL_PASSWORD = 'kmar driz hpxg easa'
     MAIL_DEFAULT_SENDER = 'sofiacid5138@alumnos.udg.mx'
     MAIL_ASCII_ATTACHMENTS = True
 config = {

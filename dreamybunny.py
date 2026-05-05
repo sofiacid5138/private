@@ -30,6 +30,14 @@ def cargarUsuario(id):
 
 
 # --- RUTAS DE LA APLICACIÓN ---
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+# ✅ RUTAS
+@app.route('/')
+def home():
+    return render_template('home.html')
 
 @dreamybunnyApp.route('/')
 def home():
@@ -43,7 +51,9 @@ def menu():
 def bunnys():
     return render_template('bunnys.html')
 
-
+@dreamybunnyApp.route('/carrito')
+def carrito():
+    return render_template('carrito.html')
 
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -131,6 +141,8 @@ def admin_page():
 @login_required
 def user_page():
     return render_template('user.html')
+
+
 
 @dreamybunnyApp.route('/sUsuario',methods = ['GET','POST'])
 def sUsuario():
