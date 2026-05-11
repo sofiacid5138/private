@@ -1,12 +1,12 @@
-from flask import Flask, render_template, url_for, request, flash, redirect
+from flask import Flask, render_template, url_for, request, flash, redirect ,session
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
-
 from flask_mail import Mail, Message
+
 
 dreamybunnyApp = Flask(__name__)
 
@@ -207,7 +207,38 @@ def sProducto():
     p = selProducto.close()
     return render_template('productos.html',productos=p)
 
-@dreamybunnyApp.route('/iProducto',methods= ['GET','POST'])
+
+@dreamybunnyApp.route('/scarrito')
+def carrito():
+    if 'carrito' in session:
+        carrito = session['carrito']
+    else:
+        carrito = []
+    return render_template('carrito.html', carrito=carrito)
+
+@dreamybunnyApp.route('/iCarrito/<int:id>',methods= ['POST','GETS'])
+def iCarrito(id): == 'POST':
+        if request method == 'POST':
+        SelProducto = db.connection.cursor()
+        SelProducto.execute("SELECT * FROM producto WHERE id=%s", (id,))
+        p = SelProducto.fetchone()
+        producto_id = p[
+            'id': p[0],
+            'nombre': p[1], 
+            'descripcion': p[2],
+            'precio': p[3],
+            'imagen': p[4]
+        ]
+   if carrito in session:
+        session['carrito'] = [producto_id]
+        carrito = session['carrito']
+        carrito.append(producto_id)
+        session['carrito'] = carrito
+        flash('Producto agregado al carrito')
+        return render_template('user.html', producto=producto_id)
+
+
+
 def iProducto():
     if request.method == 'POST':
         nombre = request.form['nombre']
