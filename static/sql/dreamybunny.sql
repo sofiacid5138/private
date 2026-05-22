@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 20-04-2026 a las 16:38:23
--- Versión del servidor: 8.0.45
--- Versión de PHP: 7.4.9
+-- Host: localhost
+-- Generation Time: May 22, 2026 at 06:48 PM
+-- Server version: 8.0.45
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `dreamybunny`
+-- Database: `dreamybunny`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `bunny`
+-- Table structure for table `bunny`
 --
 
 CREATE TABLE `bunny` (
@@ -38,21 +38,18 @@ CREATE TABLE `bunny` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
--- Volcado de datos para la tabla `bunny`
+-- Dumping data for table `bunny`
 --
 
 INSERT INTO `bunny` (`id`, `nombre`, `color`, `especialidad`, `descripcion`, `precio`, `estado`) VALUES
 (1, 'Hina Bunny', 'Rosa', 'Preparacion alimentos y decoracion ,Bienvenida', 'Maid dulce y delicada, siempre sonriente y experta en detalles kawaii.\r\nPersonalidad : es tímida y cariñosa \r\n ', 125, 'disponible'),
-(2, 'Shion Bunny', 'Lila', ' emplatado,control de calidad ,atención de mesas', 'Elegante y perfeccionista, cuida cada detalle en la presentación\r\nPersonalidad: tranquila y refinada', 135, 'disponible'),
-(3, 'Nami Bunny', 'Aqua', 'preparación de bebidas,smoothies ,entretenimiento', 'Descripción: Alegre y energética, especialista en bebidas y ambiente divertido\r\nPersonalidad: extrovertida y divertida', 110, 'disponible'),
-(4, 'Yoru Bunny', 'Negro', ' atención de mesas ,supervisión /,caja', 'Descripción: Misteriosa y elegante, mantiene el orden y supervisa el servicio \r\nPersonalidad: seria y sofisticada', 120, 'disponible'),
-(5, 'Koharu Bunny', 'Amarillo', 'bienvenida , juegos con clientes , entretenimiento', 'Descripción: Brillante y adorable, siempre animando con juegos y energía \r\nPersonalidad: alegre y juguetona', 120, 'disponible'),
-(6, 'Nao Bunny', 'Blanco', ' caja ,toma de pedidos ,organización', 'Descripción: Organizada y eficiente, asegura que todo funcione perfecto \r\nPersonalidad: seria pero amable', 130, 'disponible');
+(2, 'Nami Bunny', 'Aqua', 'preparación de bebidas,smoothies ,entretenimiento', 'Descripción: Alegre y energética, especialista en bebidas y ambiente divertido\r\nPersonalidad: extrovertida y divertida', 110, 'disponible'),
+(3, 'Yoru Bunny', 'Negro', ' atención de mesas ,supervisión /,caja', 'Descripción: Misteriosa y elegante, mantiene el orden y supervisa el servicio \r\nPersonalidad: seria y sofisticada', 120, 'disponible');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `menu_bunny`
+-- Table structure for table `menu_bunny`
 --
 
 CREATE TABLE `menu_bunny` (
@@ -64,38 +61,37 @@ CREATE TABLE `menu_bunny` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
--- Volcado de datos para la tabla `menu_bunny`
+-- Dumping data for table `menu_bunny`
 --
 
 INSERT INTO `menu_bunny` (`id`, `nombre`, `categoria`, `precio`, `imagen`) VALUES
-(2, 'Pancakes Bunny Clásico ', 'PANCAKES', 80, NULL),
-(3, 'Pancakes Rosa Delicado ', 'PANCAKES', 85, NULL),
-(4, 'Pancakes Bunny Arándano', 'PANCAKES', 90, NULL),
-(5, 'Pancakes Bunny Chocolate', 'PANCAKES', 95, NULL),
-(6, 'Pancakes Bunny Matcha\r\n', 'PANCAKES', 90, NULL),
-(7, 'Desayuno Bunny Completo', 'COMIDAS COMPLETAS', 120, NULL),
-(8, 'Tostada Bunny Aguacate ', 'COMIDAS COMPLETAS', 95, NULL),
-(9, 'Mini Burgers Bunny ', 'COMIDAS COMPLETAS', 110, NULL),
-(10, 'Brunch Bunny', 'COMIDAS COMPLETAS', 130, NULL),
-(11, 'Ensalada Cute Bunny ', 'COMIDAS COMPLETAS', 85, NULL),
-(12, 'Sopa Cute Bunny ', 'COMIDAS COMPLETAS', 75, NULL),
-(13, 'Parfait Bunny Dreams', 'POSTRES', 70, NULL),
-(14, 'Pastelitos Bunny ', 'POSTRES', 65, NULL),
-(15, 'Cupcakes Bunny Gemelos', 'POSTRES', 75, NULL),
-(16, 'Tartaleta de Frutas Bunny', 'POSTRES', 80, NULL),
-(17, 'Donas Bunny Glasé ', 'POSTRES', 60, NULL),
-(18, 'Gelato Bunny', 'POSTRES', 70, NULL),
-(20, 'Soda Bubble Mint ', 'BEBIDAS', 50, NULL),
-(21, 'Soda Bubble Berries ', 'BEBIDAS', 55, NULL),
-(22, 'Chocolate Bunny Caliente', 'BEBIDAS', 60, NULL),
-(23, 'Latte Arte Bunny', 'BEBIDAS', 65, NULL),
-(24, 'Smoothie Bunny Melón', 'BEBIDAS', 60, NULL),
-(25, 'Café Frío Bunny', 'BEBIDAS', 55, NULL);
+(1, 'Pancakes Bunny Clásico ', 'PANCAKES', 80, 'pan1.png'),
+(2, 'Pancakes Rosa Delicado ', 'PANCAKES', 85, 'pan2.png'),
+(3, 'Pancakes Bunny Arándano', 'PANCAKES', 90, 'pan3.png'),
+(4, 'Pancakes Bunny Chocolate', 'PANCAKES', 95, 'pan4.png'),
+(5, 'Pancakes Bunny Matcha\r\n', 'PANCAKES', 90, 'pan6.png'),
+(6, 'Desayuno Bunny Completo', 'COMIDAS COMPLETAS', 120, 'comida1.png'),
+(7, 'Tostada Bunny Aguacate ', 'COMIDAS COMPLETAS', 95, 'comida2.png'),
+(8, 'Mini Burgers Bunny ', 'COMIDAS COMPLETAS', 110, 'comida3.png'),
+(9, 'Brunch Bunny', 'COMIDAS COMPLETAS', 130, 'comida5.png'),
+(10, 'Ensalada Cute Bunny ', 'COMIDAS COMPLETAS', 85, 'comida4.png'),
+(11, 'Sopa Cute Bunny ', 'COMIDAS COMPLETAS', 75, 'comida6.png'),
+(12, 'Parfait Bunny Dreams', 'POSTRES', 70, 'pos1.png'),
+(13, 'Pastelitos Bunny ', 'POSTRES', 65, 'pos2.png'),
+(14, 'Cupcakes Bunny Gemelos', 'POSTRES', 75, 'pos3.png'),
+(15, 'Tartaleta de Frutas Bunny', 'POSTRES', 80, 'pos4.png'),
+(16, 'Donas Bunny Glasé ', 'POSTRES', 60, 'pos5.png'),
+(17, 'Gelato Bunny', 'POSTRES', 70, 'pos6.png'),
+(18, 'Soda Bubble Mint ', 'BEBIDAS', 50, 'be1.png'),
+(19, 'Soda Bubble Berries ', 'BEBIDAS', 55, 'be2.png'),
+(20, 'Chocolate Bunny Caliente', 'BEBIDAS', 60, 'be3.png'),
+(21, 'Smoothie Bunny Melón', 'BEBIDAS', 60, 'be4.png'),
+(22, 'Café Frío Bunny', 'BEBIDAS', 55, 'be5.png\r\n');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -107,56 +103,56 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
-(1, 'SOFIA', 'sofia.cid5138@alumnos.udg.mx', 'scrypt:32768:8:1$UiR9foyjMD2EnSMS$f6a46a0c48263a27dd761e7efecaedd21e02186bb08ea512db7f2a5c267554439e5e2c6be2b178ec6ca9d5b9f7bb410dec74bea9bc2cd1308cef3dd4afa110a3', 'A');
+(1, 'sofi', 'sofiacidm@gmail.com', 'scrypt:32768:8:1$2d3pbfZkaclS2i8f$ef929d6f28816465b17b3a31d049f2a906ede388dffe2e7518d48fc9bab2a2b4fec24c46e5391ab84dfe564c94cb2e2cf8b5feed8a33f4001431443c78b481e1', 'A');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `bunny`
+-- Indexes for table `bunny`
 --
 ALTER TABLE `bunny`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `menu_bunny`
+-- Indexes for table `menu_bunny`
 --
 ALTER TABLE `menu_bunny`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `correo` (`correo`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `bunny`
+-- AUTO_INCREMENT for table `bunny`
 --
 ALTER TABLE `bunny`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `menu_bunny`
+-- AUTO_INCREMENT for table `menu_bunny`
 --
 ALTER TABLE `menu_bunny`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

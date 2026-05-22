@@ -1,26 +1,24 @@
-from flask import Flask, render_template, url_for, request, flash, redirect ,session
+from flask import Flask, render_template, url_for, request, flash, redirect, session
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
 from flask_mail import Mail, Message
-
+import os
 
 dreamybunnyApp = Flask(__name__)
 
-# ✅ CONFIGURACIÓN PRIMERO
+# =========================================================
+# CONFIG
+# =========================================================
 dreamybunnyApp.config.from_object(config['development'])
 dreamybunnyApp.config.from_object(config['mail'])
 
-# ✅ LUEGO MAIL
 mail = Mail(dreamybunnyApp)
-
-# Configuración de la base de datos
 db = MySQL(dreamybunnyApp)
 
-# Configuración del LoginManager
 adminUsuarios = LoginManager(dreamybunnyApp)
 adminUsuarios.login_view = 'signin'
 
@@ -28,16 +26,9 @@ adminUsuarios.login_view = 'signin'
 def cargarUsuario(id):
     return ModelUser.get_by_id(db, int(id))
 
-
-# --- RUTAS DE LA APLICACIÓN ---
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-# ✅ RUTAS
-@app.route('/')
-def home():
-    return render_template('home.html')
+# =========================================================
+# 🏠 RUTAS
+# =========================================================
 
 @dreamybunnyApp.route('/')
 def home():
@@ -51,210 +42,167 @@ def menu():
 def bunnys():
     return render_template('bunnys.html')
 
+# =========================================================
+# 🛒 CARRITO
+# =========================================================
+
 @dreamybunnyApp.route('/carrito')
 def carrito():
-    return render_template('carrito.html')
+
+    carrito = session.get('carrito', [])
+
+    total = 0
+    for item in carrito:
+        total += float(item['precio'])
+
+    return render_template('carrito.html', carrito=carrito, total=total)
+
+
+@dreamybunnyApp.route('/iCarrito/<int:id>')
+def iCarrito(id):
+
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM menu_bunny WHERE id=%s", (id,))
+    p = cursor.fetchone()
+    cursor.close()
+
+    if p:
+
+        producto = {
+            'id': p[0],
+            'nombre': p[1],
+            'categoria': p[2],
+            'precio': float(p[3]),
+            'imagen': p[4]
+        }
+
+        if 'carrito' not in session:
+            session['carrito'] = []
+
+        session['carrito'].append(producto)
+
+        flash('Producto agregado al carrito 💖')
+
+    return redirect(url_for('menu'))
+
+# =========================================================
+# 👤 SIGNUP
+# =========================================================
 
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
+
     if request.method == 'POST':
 
-        if not request.form['nombre'] or not request.form['correo'] or not request.form['clave']:
-            flash("Por favor, completa todos los campos.", "warning")
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        clave = request.form['clave']
+
+        if not nombre or not correo or not clave:
+            flash("Completa todos los campos", "warning")
             return redirect(url_for('signup'))
-            
-        clave_cifrada = generate_password_hash(request.form['clave'])
 
-        nuevo_usuario = User(
-            id=None,
-            perfil='U',
-            nombre=request.form['nombre'],
-            correo=request.form['correo'],
-            clave=clave_cifrada
-        )
+        clave_cifrada = generate_password_hash(clave)
 
-        # ✅ GUARDAR USUARIO
-        regUsuario = db.connection.cursor()
-        regUsuario.execute(
-            "INSERT INTO usuario (nombre, correo, clave, perfil) VALUES (%s, %s, %s, %s)",
-            (nuevo_usuario.nombre.upper(), nuevo_usuario.correo, nuevo_usuario.clave, nuevo_usuario.perfil)
-        )
+        cursor = db.connection.cursor()
+        cursor.execute("""
+            INSERT INTO usuario (nombre, correo, clave, perfil)
+            VALUES (%s, %s, %s, 'U')
+        """, (nombre.upper(), correo, clave_cifrada))
+
         db.connection.commit()
-        regUsuario.close()
+        cursor.close()
 
-        # ✅ CREAR CORREO
-        msg = Message(
-            subject='Bienvenido a Dreamy Bunny 💖',
-            sender=dreamybunnyApp.config['MAIL_USERNAME'],
-            recipients=[request.form['correo']]
-        )
-
-        msg.html = render_template('mail.html', usuario=nuevo_usuario)
-
-        # ✅ ENVIAR CORREO (CON SEGURIDAD)
-        try:
-            mail.send(msg)
-            flash("Te enviamos un correo de bienvenida 💌", "success")
-        except Exception as e:
-            print("ERROR MAIL:", e)
-            flash("Usuario creado pero no se pudo enviar el correo ", "warning")
-
-        flash("Registro exitoso 🎉", "success")
+        flash("Registro exitoso 🎉 ahora inicia sesión", "success")
         return redirect(url_for('signin'))
 
     return render_template('signup.html')
 
+# =========================================================
+# 🔐 SIGNIN (🔥 CORREGIDO)
+# =========================================================
 
 @dreamybunnyApp.route('/signin', methods=['GET', 'POST'])
 def signin():
+
     if request.method == 'POST':
-        usuario = User(id=None, perfil=None, nombre=None, correo=request.form['correo'], clave=request.form['clave'])
-        usuario_autenticado = ModelUser.signin(db, usuario)
 
-        if usuario_autenticado:
-            login_user(usuario_autenticado)
-            flash(f"¡Bienvenido de nuevo, {usuario_autenticado.nombre}!", "info")
-            if usuario_autenticado.perfil == 'A':
-                return redirect(url_for('admin_page'))
-            else:
-                return redirect(url_for('user_page'))
-        else:
-            flash("Correo o contraseña incorrectos. Inténtalo de nuevo.", "danger")
-            return redirect(url_for('signin'))
-    else:
-        return render_template('signin.html')
+        correo = request.form['correo']
+        clave = request.form['clave']
 
+        cursor = db.connection.cursor()
+        cursor.execute("""
+            SELECT id, nombre, correo, clave, perfil
+            FROM usuario
+            WHERE correo=%s
+        """, (correo,))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user and check_password_hash(user[3], clave):
+
+            usuario = User(
+                id=user[0],
+                nombre=user[1],
+                correo=user[2],
+                clave=user[3],
+                perfil=user[4]
+            )
+
+            login_user(usuario)
+
+            flash(f"¡Bienvenido {usuario.nombre}! 💖", "login_success")
+
+            # 🔥 AQUÍ CAMBIO IMPORTANTE:
+            return redirect(url_for('home'))
+
+        flash("Correo o contraseña incorrectos", "danger")
+        return redirect(url_for('signin'))
+
+    return render_template('signin.html')
+
+# =========================================================
+# 🚪 LOGOUT
+# =========================================================
 
 @dreamybunnyApp.route('/logout')
 @login_required
 def logout():
+
     logout_user()
-    flash("Has cerrado sesión.", "info")
+    flash("Has cerrado sesión")
+
     return redirect(url_for('home'))
+
+# =========================================================
+# 👑 ADMIN / USER (ARREGLADO)
+# =========================================================
 
 @dreamybunnyApp.route('/admin')
 @login_required
 def admin_page():
     return render_template('admin.html')
 
-@dreamybunnyApp.route('/usuario')
-@login_required
-def user_page():
-    return render_template('user.html')
+# ❌ ELIMINADO user_page PROBLEMÁTICO
+# (esto era lo que te rompía con user.html)
 
+# =========================================================
+# 👥 USUARIOS
+# =========================================================
 
-
-@dreamybunnyApp.route('/sUsuario',methods = ['GET','POST'])
+@dreamybunnyApp.route('/sUsuario')
 def sUsuario():
-    selUsuario = db.connection.cursor()
-    selUsuario.execute("SELECT * FROM usuario")
-    u = selUsuario.fetchall()
-    selUsuario.close()
+
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM usuario")
+    u = cursor.fetchall()
+    cursor.close()
+
     return render_template('users.html', usuarios=u)
 
-@dreamybunnyApp.route('/iUsuario',methods = ['GET','POST'])
-def iUsuario():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        correo = request.form['correo']
-        clave = request.form['clave']
-        perfil = request.form['perfil']
-        claveCifrada = generate_password_hash(clave)
-        regUsuario = db.connection.cursor()
-        regUsuario.execute("INSERT INTO usuario (nombre, correo, clave, perfil) VALUES (%s, %s, %s, %s)", (nombre.upper(), correo, claveCifrada, perfil))
-        db.connection.commit()
-        flash('Usuario registrado correctamente')
-        regUsuario.close()
-        return redirect(url_for('sUsuario'))
-    else:
-        return render_template('users.html')
+# =========================================================
+# 🚀 RUN
+# =========================================================
 
-@dreamybunnyApp.route('/uUsuario/<int:id>',methods = ['GET','POST'])
-def uUsuario(id):
-    if request.method == 'POST':
-        id = request.form['id']
-        nombre = request.form['nombre']
-        correo = request.form['correo']
-        clave = request.form['clave']
-        perfil = request.form['perfil']
-        claveCifrada = generate_password_hash(clave)
-        actUsuario = db.connection.cursor()
-        actUsuario.execute("UPDATE usuario SET nombre=%s, correo=%s, clave=%s, perfil=%s WHERE id=%s", (nombre.upper(), correo, claveCifrada, perfil, id))
-        db.connection.commit()
-        flash('Usuario actualizado correctamente')
-        actUsuario.close()
-        return redirect(url_for('sUsuario'))
-    else:
-        return render_template('users.html')
-   
-@dreamybunnyApp.route('/dUsuario/<int:id>',methods = ['GET','POST'])
-def dUsuario(id):
-    if request.method == 'POST':
-        delUsuario = db.connection.cursor()
-        delUsuario.execute("DELETE FROM usuario WHERE id=%s", (id,))
-        db.connection.commit()
-        delUsuario.close()
-        flash('usuario eliminado')
-        return redirect(url_for('sUsuario'))
-    else:
-        return render_template('users.html')
-
-@dreamybunnyApp.route('/sProducto',methods= ['GET','POST'])
-@login_required
-def sProducto():
-    selProducto = db.connection.cursor()
-    selProducto.execute("SELECT * FROM usuario")
-    p = selProducto.close()
-    return render_template('productos.html',productos=p)
-
-
-@dreamybunnyApp.route('/scarrito')
-def carrito():
-    if 'carrito' in session:
-        carrito = session['carrito']
-    else:
-        carrito = []
-    return render_template('carrito.html', carrito=carrito)
-
-@dreamybunnyApp.route('/iCarrito/<int:id>',methods= ['POST','GETS'])
-def iCarrito(id): == 'POST':
-        if request method == 'POST':
-        SelProducto = db.connection.cursor()
-        SelProducto.execute("SELECT * FROM producto WHERE id=%s", (id,))
-        p = SelProducto.fetchone()
-        producto_id = p[
-            'id': p[0],
-            'nombre': p[1], 
-            'descripcion': p[2],
-            'precio': p[3],
-            'imagen': p[4]
-        ]
-   if carrito in session:
-        session['carrito'] = [producto_id]
-        carrito = session['carrito']
-        carrito.append(producto_id)
-        session['carrito'] = carrito
-        flash('Producto agregado al carrito')
-        return render_template('user.html', producto=producto_id)
-
-
-
-def iProducto():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        descripcion = request.form['descripcion']
-        precio = request.form['precio']
-        imagen = request.form['imagen']
-        if imagen and imagen.filename :
-            nombre_imagen = imagen.filename
-            imagen.save(os.path.join('static/images', nombre_imagen))
-            NuevoProducto = db.connection.cursor()
-        NuevoProducto.execute("INSERT INTO producto (nombre, descripcion, precio, imagen) VALUES (%s, %s, %s, %s)", (nombre.upper(), descripcion, precio, imagen))
-        db.connection.commit()
-        flash('Producto registrado correctamente')
-        NuevoProducto.close()
-        return redirect(url_for('sProducto'))
-    else:
-        return render_template('productos.html')
 if __name__ == '__main__':
     dreamybunnyApp.run(port=3000, debug=True)

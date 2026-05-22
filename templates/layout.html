@@ -333,6 +333,9 @@ body{
   border:none;
 }
 
+
+
+
 /* ===== RESERVAS ===== */
 
 #reservas{
@@ -454,9 +457,76 @@ h2{
   padding:2px 6px;
   font-size:12px;
 }
+
+.user-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:white;
+  font-family:'porkys';
+  font-size:18px;
+  padding:6px 12px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.15);
+  transition:0.3s;
+}
+
+.user-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:white;
+  font-family:'porkys';
+  font-size:18px;
+  padding:6px 12px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.15);
+  transition:0.3s;
+}
+
+.user-box:hover{
+  transform:scale(1.05);
+  background:rgba(255,255,255,0.25);
+}
+
+/* 👤 icono */
+.user-box i{
+  color:#ffd1e8;
+  font-size:18px;
+  display:inline-block;
+}
+
+/* nombre */
+.user-box span{
+  color:white;
+}
+
+.login-toast{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#f48fb1;
+  color:white;
+  font-family:'porkys';
+  padding:15px 20px;
+  border-radius:20px;
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
+  z-index:9999;
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut{
+  0%{opacity:0; transform:translateY(-20px);}
+  10%{opacity:1; transform:translateY(0);}
+  80%{opacity:1;}
+  100%{opacity:0; transform:translateY(-20px);}
+}
+
+
+
+
 </style>
 </head>
-
 <body>
 
 <div class="header-container">
@@ -473,7 +543,47 @@ h2{
   <a href="{{ url_for('menu') }}">Menú</a>
   <a href="{{ url_for('sUsuario') }}">Usuarios</a>
 
+
+  <div class="modal fade" id="logoutModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:20px; background:#fde4ee;">
+
+      <div class="modal-header">
+        <h5 style="color:#f48fb1; font-family:'porkys';">
+          Cerrar sesión
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body" style="text-align:center;">
+        <p style="color:#6a1b9a; font-family:'cream'; font-size:18px;">
+          ¿Deseas cerrar sesión?
+        </p>
+      </div>
+
+      <div class="modal-footer" style="justify-content:center; gap:10px;">
+
+        <!-- ❌ NO -->
+        <button class="btn btn-secondary" data-bs-dismiss="modal"
+          style="background:#8fffe6; border:none; border-radius:20px;">
+          Volveré más tarde
+        </button>
+
+        <!-- ✅ SÍ LOGOUT REAL -->
+        <a href="{{ url_for('logout') }}" class="btn btn-primary"
+          style="background:#f48fb1; border:none; border-radius:20px;">
+          Cerrar sesión
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
   <!-- BOTONES -->
+  {% if not current_user.is_authenticated %}
+
   <button class="btn-registro" data-bs-toggle="modal" data-bs-target="#signinModal">
     Iniciar sesión
   </button>
@@ -482,14 +592,50 @@ h2{
     Regístrate
   </button>
 
-    <!-- 🛒 CARRITO -->
-  <a href="/carrito" class="cart-icon">
-    🛒 <span id="cart-count">0</span>
-  </a>
+{% endif %}
 
+ <!-- 👤 USUARIO -->
+{% if current_user.is_authenticated %}
+  <div class="user-box" data-bs-toggle="modal" data-bs-target="#logoutModal" style="cursor:pointer;">
+    <i class="fa-solid fa-user"></i>
+    <span>{{ current_user.nombre }}</span>
+  </div>
+{% endif %}
+
+<!-- 🛒 CARRITO -->
+<a href="/carrito" class="cart-icon">
+  🛒 <span id="cart-count">0</span>
+</a>
 </nav>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
 
+      {% if category == "login_success" %}
+        <div id="loginToast" class="login-toast">
+          💖 {{ message }}
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+
+      {% if category == "success" %}
+        <div class="alert alert-success text-center">
+          {{ message }}
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <!-- 🔽 CONTENIDO DINÁMICO -->
 {% block contenido %}{% endblock %}
