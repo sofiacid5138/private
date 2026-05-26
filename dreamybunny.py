@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, flash, redirect, session
 from flask_mysqldb import MySQL
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import config
 from models.ModelUser import ModelUser
@@ -119,7 +119,7 @@ def signup():
     return render_template('signup.html')
 
 # =========================================================
-# 🔐 SIGNIN (🔥 CORREGIDO)
+# 🔐 SIGNIN
 # =========================================================
 
 @dreamybunnyApp.route('/signin', methods=['GET', 'POST'])
@@ -153,7 +153,6 @@ def signin():
 
             flash(f"¡Bienvenido {usuario.nombre}! 💖", "login_success")
 
-            # 🔥 AQUÍ CAMBIO IMPORTANTE:
             return redirect(url_for('home'))
 
         flash("Correo o contraseña incorrectos", "danger")
@@ -175,18 +174,6 @@ def logout():
     return redirect(url_for('home'))
 
 # =========================================================
-# 👑 ADMIN / USER (ARREGLADO)
-# =========================================================
-
-@dreamybunnyApp.route('/admin')
-@login_required
-def admin_page():
-    return render_template('admin.html')
-
-# ❌ ELIMINADO user_page PROBLEMÁTICO
-# (esto era lo que te rompía con user.html)
-
-# =========================================================
 # 👥 USUARIOS
 # =========================================================
 
@@ -194,11 +181,31 @@ def admin_page():
 def sUsuario():
 
     cursor = db.connection.cursor()
-    cursor.execute("SELECT * FROM usuario")
-    u = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT id, nombre, correo, perfil
+        FROM usuario
+    """)
+
+    usuarios = cursor.fetchall()
+
     cursor.close()
 
-    return render_template('users.html', usuarios=u)
+    return render_template('users.html', usuarios=usuarios)
+
+# =========================================================
+# 👑 ADMIN PROTEGIDO (ÚNICO, CORRECTO)
+# =========================================================
+
+@dreamybunnyApp.route('/admin')
+@login_required
+def admin_page():
+
+    if current_user.perfil != 'A':
+        flash("No tienes permisos de administrador 💔")
+        return redirect(url_for('home'))
+
+    return render_template('admin.html')
 
 # =========================================================
 # 🚀 RUN

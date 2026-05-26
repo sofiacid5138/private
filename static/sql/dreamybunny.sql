@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 22, 2026 at 06:48 PM
--- Server version: 8.0.45
--- PHP Version: 7.4.9
+-- Servidor: localhost
+-- Tiempo de generación: 26-05-2026 a las 16:45:25
+-- Versión del servidor: 8.0.43
+-- Versión de PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dreamybunny`
+-- Base de datos: `dreamybunny`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bunny`
+-- Estructura de tabla para la tabla `bunny`
 --
 
 CREATE TABLE `bunny` (
@@ -38,7 +38,7 @@ CREATE TABLE `bunny` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
--- Dumping data for table `bunny`
+-- Volcado de datos para la tabla `bunny`
 --
 
 INSERT INTO `bunny` (`id`, `nombre`, `color`, `especialidad`, `descripcion`, `precio`, `estado`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `bunny` (`id`, `nombre`, `color`, `especialidad`, `descripcion`, `pr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu_bunny`
+-- Estructura de tabla para la tabla `menu_bunny`
 --
 
 CREATE TABLE `menu_bunny` (
@@ -61,7 +61,7 @@ CREATE TABLE `menu_bunny` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 --
--- Dumping data for table `menu_bunny`
+-- Volcado de datos para la tabla `menu_bunny`
 --
 
 INSERT INTO `menu_bunny` (`id`, `nombre`, `categoria`, `precio`, `imagen`) VALUES
@@ -91,7 +91,7 @@ INSERT INTO `menu_bunny` (`id`, `nombre`, `categoria`, `precio`, `imagen`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -103,56 +103,106 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Dumping data for table `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
-(1, 'sofi', 'sofiacidm@gmail.com', 'scrypt:32768:8:1$2d3pbfZkaclS2i8f$ef929d6f28816465b17b3a31d049f2a906ede388dffe2e7518d48fc9bab2a2b4fec24c46e5391ab84dfe564c94cb2e2cf8b5feed8a33f4001431443c78b481e1', 'A');
+(1, 'sofi', 'sofiacidm@gmail.com', 'scrypt:32768:8:1$2d3pbfZkaclS2i8f$ef929d6f28816465b17b3a31d049f2a906ede388dffe2e7518d48fc9bab2a2b4fec24c46e5391ab84dfe564c94cb2e2cf8b5feed8a33f4001431443c78b481e1', 'A'),
+(3, 'Sakura Moon', 'sakura1@dreamy.com', 'scrypt:kawaii$hash01', 'U'),
+(4, 'Luna Bunny', 'luna2@dreamy.com', 'scrypt:kawaii$hash02', 'U'),
+(5, 'Mimi Cherry', 'mimi3@dreamy.com', 'scrypt:kawaii$hash03', 'U'),
+(6, 'Yuki Star', 'yuki4@dreamy.com', 'scrypt:kawaii$hash04', 'U'),
+(7, 'Hana Sweet', 'hana5@dreamy.com', 'scrypt:kawaii$hash05', 'U'),
+(8, 'Neko Love', 'neko6@dreamy.com', 'scrypt:kawaii$hash06', 'U'),
+(9, 'Aiko Dream', 'aiko7@dreamy.com', 'scrypt:kawaii$hash07', 'U'),
+(10, 'Rina Cloud', 'rina8@dreamy.com', 'scrypt:kawaii$hash08', 'U'),
+(11, 'Moka Puff', 'moka9@dreamy.com', 'scrypt:kawaii$hash09', 'U'),
+(12, 'Choco Berry', 'choco10@dreamy.com', 'scrypt:kawaii$hash10', 'U'),
+(13, 'Pinky Sky', 'pinky11@dreamy.com', 'scrypt:kawaii$hash11', 'U'),
+(14, 'Kira Moonlight', 'kira12@dreamy.com', 'scrypt:kawaii$hash12', 'U'),
+(15, 'Sora Bunny', 'sora13@dreamy.com', 'scrypt:kawaii$hash13', 'U'),
+(16, 'Mika Sugar', 'mika14@dreamy.com', 'scrypt:kawaii$hash14', 'U'),
+(17, 'Yume Star', 'yume15@dreamy.com', 'scrypt:kawaii$hash15', 'U'),
+(18, 'Nana Soft', 'nana16@dreamy.com', 'scrypt:kawaii$hash16', 'U'),
+(19, 'Hoshi Glow', 'hoshi17@dreamy.com', 'scrypt:kawaii$hash17', 'U'),
+(20, 'Lili Pink', 'lili18@dreamy.com', 'scrypt:kawaii$hash18', 'U'),
+(21, 'Momo Dreamy', 'momo19@dreamy.com', 'scrypt:kawaii$hash19', 'U'),
+(22, 'Koko Sweet', 'koko20@dreamy.com', 'scrypt:kawaii$hash20', 'U'),
+(23, 'Suki Cloud', 'suki21@dreamy.com', 'scrypt:kawaii$hash21', 'U'),
+(24, 'Ami Cherry', 'ami22@dreamy.com', 'scrypt:kawaii$hash22', 'U'),
+(25, 'Hina Glow', 'hina23@dreamy.com', 'scrypt:kawaii$hash23', 'U'),
+(26, 'Ruru Bunny', 'ruru24@dreamy.com', 'scrypt:kawaii$hash24', 'U'),
+(27, 'Tori Star', 'tori25@dreamy.com', 'scrypt:kawaii$hash25', 'U'),
+(28, 'Mimi Latte', 'mimi26@dreamy.com', 'scrypt:kawaii$hash26', 'U'),
+(29, 'Lala Moon', 'lala27@dreamy.com', 'scrypt:kawaii$hash27', 'U'),
+(30, 'Kiki Dream', 'kiki28@dreamy.com', 'scrypt:kawaii$hash28', 'U'),
+(31, 'Nini Soft', 'nini29@dreamy.com', 'scrypt:kawaii$hash29', 'U'),
+(32, 'Yaya Pink', 'yaya30@dreamy.com', 'scrypt:kawaii$hash30', 'U'),
+(33, 'Coco Star', 'coco31@dreamy.com', 'scrypt:kawaii$hash31', 'U'),
+(34, 'Luna Sugar', 'luna32@dreamy.com', 'scrypt:kawaii$hash32', 'U'),
+(35, 'Mimi Sky', 'mimi33@dreamy.com', 'scrypt:kawaii$hash33', 'U'),
+(36, 'Sakura Glow', 'sakura34@dreamy.com', 'scrypt:kawaii$hash34', 'U'),
+(37, 'Hana Bunny', 'hana35@dreamy.com', 'scrypt:kawaii$hash35', 'U'),
+(38, 'Yuki Cloud', 'yuki36@dreamy.com', 'scrypt:kawaii$hash36', 'U'),
+(39, 'Rina Star', 'rina37@dreamy.com', 'scrypt:kawaii$hash37', 'U'),
+(40, 'Moka Dream', 'moka38@dreamy.com', 'scrypt:kawaii$hash38', 'U'),
+(41, 'Neko Pink', 'neko39@dreamy.com', 'scrypt:kawaii$hash39', 'U'),
+(42, 'Aiko Moon', 'aiko40@dreamy.com', 'scrypt:kawaii$hash40', 'U'),
+(43, 'Puffy Love', 'puffy41@dreamy.com', 'scrypt:kawaii$hash41', 'U'),
+(44, 'Chibi Star', 'chibi42@dreamy.com', 'scrypt:kawaii$hash42', 'U'),
+(45, 'Mimi Candy', 'mimi43@dreamy.com', 'scrypt:kawaii$hash43', 'U'),
+(46, 'Sora Dream', 'sora44@dreamy.com', 'scrypt:kawaii$hash44', 'U'),
+(47, 'Hoshi Bunny', 'hoshi45@dreamy.com', 'scrypt:kawaii$hash45', 'U'),
+(48, 'Kira Glow', 'kira46@dreamy.com', 'scrypt:kawaii$hash46', 'U'),
+(49, 'Lili Moon', 'lili47@dreamy.com', 'scrypt:kawaii$hash47', 'U'),
+(50, 'Momo Pink', 'momo48@dreamy.com', 'scrypt:kawaii$hash48', 'U'),
+(51, 'Yume Cloud', 'yume49@dreamy.com', 'scrypt:kawaii$hash49', 'U'),
+(52, 'Nana Star', 'nana50@dreamy.com', 'scrypt:kawaii$hash50', 'U');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `bunny`
+-- Indices de la tabla `bunny`
 --
 ALTER TABLE `bunny`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menu_bunny`
+-- Indices de la tabla `menu_bunny`
 --
 ALTER TABLE `menu_bunny`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `usuario`
+-- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `correo` (`correo`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `bunny`
+-- AUTO_INCREMENT de la tabla `bunny`
 --
 ALTER TABLE `bunny`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `menu_bunny`
+-- AUTO_INCREMENT de la tabla `menu_bunny`
 --
 ALTER TABLE `menu_bunny`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

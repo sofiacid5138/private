@@ -1,62 +1,94 @@
 {% extends 'layout.html' %}
 
-{% block titulo %} Iniciar Sesión - DreamyBunny {% endblock %}
+{% block titulo %} Iniciar sesión {% endblock %}
 
 {% block contenido %}
-<section>
-    <h2>¡Bienvenido de vuelta!</h2>
-    <p>Te extrañamos. ¡Inicia sesión para continuar!</p>
-    
-    <!-- Aquí se mostrarán los mensajes de error/éxito -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }} mt-3" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-
-    <form action="/signin" method="post" class="mt-4">
-        <div class="mb-3">
-            <input type="email" name="correo" class="form-control" placeholder="Correo Electrónico" required>
-        </div>
-        <div class="mb-3">
-            <input type="password" name="clave" class="form-control" placeholder="Contraseña" required>
-        </div>
-        <button type="submit" class="btn-auth">Iniciar Sesión</button>
-    </form>
-    <div class="text-center mt-3">
-        <a href="{{ url_for('signup') }}">¿No tienes una cuenta? Regístrate</a>
-    </div>
-</section>
 
 <style>
-   .form-control {
-        border-radius: 20px;
-        padding: 10px 20px;
-        border: 2px solid #f8cdda;
-    }
-   .btn-auth {
-        background-color: #fd94c3;
-        color: white;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.2s;
-    }
-   .btn-auth:hover {
-        transform: scale(1.05);
-    }
-    a {
-        color: #fd94c3;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
+
+.login-container{
+    width: 100%;
+    height: 80vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-box{
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(255,105,180,.3);
+    text-align:center;
+}
+
+.login-box h2{
+    color:#ff4fa3;
+    margin-bottom:20px;
+    font-family:'poppins';
+}
+
+.login-box input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 2px solid #ffb6d9;
+    outline: none;
+}
+
+.login-box input:focus{
+    border-color:#ff4fa3;
+}
+
+.login-box button{
+    width: 100%;
+    padding: 10px;
+    background:#ff4fa3;
+    border:none;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.login-box button:hover{
+    background:#ff2f91;
+}
+
+.msg-error{
+    color:red;
+    margin-bottom:10px;
+}
+
 </style>
+
+<div class="login-container">
+
+    <form class="login-box" method="POST" action="{{ url_for('signin') }}">
+
+        <h2>💖 Iniciar sesión 💖</h2>
+
+        <!-- MENSAJES FLASH -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == "danger" %}
+                        <div class="msg-error">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <input type="email" name="correo" placeholder="Correo" required>
+
+        <input type="password" name="clave" placeholder="Contraseña" required>
+
+        <button type="submit">Entrar</button>
+
+    </form>
+
+</div>
+
 {% endblock %}

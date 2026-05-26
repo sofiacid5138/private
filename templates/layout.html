@@ -670,6 +670,36 @@ h2{
   </div>
 </div>
 
+<!-- 🔐 MODAL LOGIN -->
+<div class="modal fade" id="signinModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5>Iniciar sesión</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{{ url_for('signin') }}" method="POST">
+        <div class="modal-body">
+
+          <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+          <input type="password" name="clave" class="form-control mb-2" placeholder="Contraseña">
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">
+            Entrar 💖
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
 <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
 <!-- 🔥 JAVASCRIPT (CORRECTO AQUÍ ABAJO) -->
 <script>
