@@ -36,7 +36,22 @@ def home():
 
 @dreamybunnyApp.route('/menu')
 def menu():
-    return render_template('menu.html')
+
+    cursor = db.connection.cursor()
+
+    cursor.execute("""
+        SELECT id, nombre, categoria, precio, imagen
+        FROM menu_bunny
+    """)
+
+    productos = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template(
+        'menu.html',
+        productos=productos
+    )
 
 @dreamybunnyApp.route('/bunnys')
 def bunnys():

@@ -14,425 +14,152 @@
     </p>
   </div>
 
+<section class="menu-main">
+
   <!-- 🥞 PANCAKES -->
-<h2 class="titulo-seccion">Pancakes 🥞</h2>
-<div class="menu-grid">
+  <h2 class="titulo-seccion">Pancakes 🥞</h2>
+  <div class="menu-grid">
 
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pan1.png') }}">
-<div class="card-body">
-  
-<h5 class="card-title">Pancakes Bunny Clásico — $80</h5>
-<p>Esponjosos y doraditos, con una carita de conejo hecha de mantequilla.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pan1.png') }}"
-  data-title="Pancakes Bunny Clásico"
-  data-desc="Esponjosos y doraditos, con una carita de conejo hecha de mantequilla."
-  data-price="$80"
->
-  Comprar
-</button>
-</div>
-</div>
+    {% for p in productos %}
+      {% if p[2] == 'PANCAKES' %}
 
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pan2.png') }}">
-<div class="card-body">
-<h5>Pancakes Rosa Delicado — $85</h5>
-<p>Bañados en una suave crema de fresas que les da un toque mágico y rosado.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pan2.png') }}"
-  data-title="Pancakes Rosa Delicado - $85"
-  data-desc="Bañados en una suave crema de fresas que les da un toque mágico y rosado."
-  data-price="$85"
->
-  Comprar
-</button>
-</div>
-</div>
+      <div class="card kawaii-card">
+        <img src="{{ url_for('static', filename='img/' ~ p[4].strip()) }}">
 
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pan3.png') }}">
-<div class="card-body">
-<h5>Pancakes Bunny Arándanos — $90</h5>
-<p>Rellenos de frutitas azules que explotan de sabor en cada bocado.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pan3.png') }}"
-  data-title="Pancakes Bunny Arándanos - $90"
-  data-desc="Rellenos de frutitas azules que explotan de sabor en cada bocado."
-  data-price="$90"
->
-  Comprar
-</button>
-</div>
-</div>
+        <div class="card-body">
+          <h5>{{ p[1] }} — ${{ p[3] }}</h5>
+          <p>Dreamy Bunny 💖</p>
 
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pan4.png') }}">
-<div class="card-body">
-<h5>Pancakes Bunny Chocolate — $95</h5>
-<p>Masa de chocolate oscuro con chispas dulces para un abrazo al corazón.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pan4.png') }}"
-  data-title="Pancakes Bunny Chocolate - $95"
-  data-desc="Masa de chocolate oscuro con chispas dulces para un abrazo al corazón."
-  data-price="$95"
->
-  Comprar
-</button>
-</div>
-</div>
+          <button
+            class="buy-btn product-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal"
+            data-id="{{ p[0] }}"
+            data-img="{{ url_for('static', filename='img/' ~ p[4].strip()) }}"
+            data-title="{{ p[1] }}"
+            data-desc="Dreamy Bunny 💖"
+            data-price="{{ p[3] }}"
+          >
+            Comprar
+          </button>
 
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pan6.png') }}">
-<div class="card-body">
-<h5>Pancakes Bunny Matcha — $90</h5>
-<p>Un toque zen y verde pastel con el aroma relajante del té matcha.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pan6.png') }}"
-  data-title="Pancakes Bunny Matcha - $90"
-  data-desc="Un toque zen y verde pastel con el aroma relajante del té matcha."
-  data-price="$90"
->
-  Comprar
-</button>
-</div>
-</div>
+        </div>
+      </div>
 
-</div>
+      {% endif %}
+    {% endfor %}
 
-
-<!-- 🍽️ COMIDAS -->
-<h2 class="titulo-seccion">Comidas 🍱</h2>
-<div class="menu-grid">
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida1.png') }}">
-<h5>Desayuno Bunny Completo — $120</h5>
-<p> El combo perfecto con huevo, tocino y panecillos para empezar el día con energía</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida1.png') }}"
-  data-title="Desayuno Bunny Completo - $120"
-  data-desc="El combo perfecto con huevo, tocino y panecillos para empezar el día con energía."
-  data-price="$120"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida2.png') }}">
-<h5>Tostada Bunny Aguacate — $95</h5>
-<p>Pan crujiente con aguacate cremoso y detalles de rabanitos.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida2.png') }}"
-  data-title="Tostada Bunny Aguacate - $95"
-  data-desc="Pan crujiente con aguacate cremoso y detalles de rabanitos."
-  data-price="$95"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida3.png') }}">
-<h5>Mini Burgers Bunny — $110</h5>
-<p> Hamburguesas pequeñitas con orejitas de pan, ¡son casi demasiado lindas para comer!</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida3.png') }}"
-  data-title="Mini Burgers Bunny - $110"
-  data-desc="Hamburguesas pequeñitas con orejitas de pan, ¡son casi demasiado lindas para comer!"
-  data-price="$110"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida4.png') }}">
-<h5>Brunch Bunny — $130</h5>
-<p> Una selección especial de salados y dulces para disfrutar sin prisas.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida4.png') }}"
-  data-title="Brunch Bunny - $130"
-  data-desc="Una selección especial de salados y dulces para disfrutar sin prisas."
-  data-price="$130"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida5.png') }}">
-<h5>Ensalada Cute Bunny — $85</h5>
-<p>Vegetales frescos y coloridos cortados con formas divertidas y nutritivas.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida5.png') }}"
-  data-title="Ensalada Cute Bunny - $85"
-  data-desc="Vegetales frescos y coloridos cortados con formas divertidas y nutritivas."
-  data-price="$85"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/comida6.png') }}">
-<h5>Sopa Cute Bunny — $75</h5>
-<p> Un caldito calientito que te hace sentir bien, servido en un tazón de conejito.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/comida6.png') }}"
-  data-title="Sopa Cute Bunny - $75"
-  data-desc="Un caldito calientito que te hace sentir bien, servido en un tazón de conejito."
-  data-price="$75"
->
-  Comprar
-</button>
-</div>
-
-</div>
-
-
-<!-- 🍰 POSTRES -->
-<h2 class="titulo-seccion">Postres 🍰</h2>
-<div class="menu-grid">
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos1.png') }}">
-<h5>Parfait Bunny Dreams — $70</h5>
-<p>Capas de yogurt, granola y fruta que parecen nubes en un vasito.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos1.png') }}"
-  data-title="Parfait Bunny Dreams - $70"
-  data-desc="Capas de yogurt, granola y fruta que parecen nubes en un vasito."
-  data-price="$70"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos2.png') }}">
-<h5>Pastelitos Bunny — $65</h5>
-<p>Mini bizcochos decorados con betún suave y chispas de colores.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos2.png') }}"
-  data-title="Pastelitos Bunny - $65"
-  data-desc="Mini bizcochos decorados con betún suave y chispas de colores."
-  data-price="$65"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos3.png') }}">
-<h5>Cupcakes Bunny Gemelos — $75</h5>
-<p>Mini bizcochos decorados con betún suave y chispas de colores.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos3.png') }}"
-  data-title="Cupcakes Bunny Gemelos - $75"
-  data-desc="Mini bizcochos decorados con betún suave y chispas de colores."
-  data-price="$75"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos4.png') }}">
-<h5>Tartaleta de Frutas Bunny — $80</h5>
-<p>Una base crujiente rellena de crema y joyitas de frutas frescas.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos4.png') }}"
-  data-title="Tartaleta de Frutas Bunny - $80"
-  data-desc="Una base crujiente rellena de crema y joyitas de frutas frescas."
-  data-price="$80"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos5.png') }}">
-<h5>Donas Bunny Glasé — $60</h5>
-<p>Rosquillas brillantes con glaseado espejo y detalles de chocolate.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos5.png') }}"
-  data-title="Donas Bunny Glasé - $60"
-  data-desc="Rosquillas brillantes con glaseado espejo y detalles de chocolate."
-  data-price="$60"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/pos6.png') }}">
-<h5>Gelato Bunny — $70</h5>
-<p> Una bola de helado súper fría con orejitas de galleta crujiente.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/pos6.png') }}"
-  data-title="Gelato Bunny - $70"
-  data-desc="Una bola de helado súper fría con orejitas de galleta crujiente."
-  data-price="$70"
->
-  Comprar
-</button>
-</div>
-
-</div>
-
-
-<!-- 🧋 BEBIDAS -->
-<h2 class="titulo-seccion">Bebidas 🧋</h2>
-<div class="menu-grid">
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/be1.png') }}">
-<h5>Soda Bubble Mint — $50</h5>
-<p>Refrescante burbujeo de menta con perlas que bailan en el fondo.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/be1.png') }}"
-  data-title="Soda Bubble Mint - $50"
-  data-desc="Refrescante burbujeo de menta con perlas que bailan en el fondo."
-  data-price="$50"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/be2.png') }}">
-<h5>Soda Bubble Berries — $55</h5>
-<p>Una explosión dulce de frutos rojos con burbujas divertidas.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/be2.png') }}"
-  data-title="Soda Bubble Berries - $55"
-  data-desc="Una explosión dulce de frutos rojos con burbujas divertidas."
-  data-price="$55"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/be3.png') }}">
-<h5>Chocolate Bunny Caliente — $60</h5>
-<p>Leche chocolatosa con una montaña de bombones flotantes.</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/be3.png') }}"
-  data-title="Chocolate Bunny Caliente - $60"
-  data-desc="Leche chocolatosa con una montaña de bombones flotantes."
-  data-price="$60"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/be4.png') }}">
-<h5>Smoothie Bunny Melón — $60</h5>
-<p>Granizado de melón dulce, tan fresquito como una brisa de verano.
-</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/be4.png') }}"
-  data-title="Smoothie Bunny Melón - $60"
-  data-desc="Granizado de melón dulce, tan fresquito como una brisa de verano."
-  data-price="$60"
->
-  Comprar
-</button>
-</div>
-
-<div class="card kawaii-card">
-<img src="{{ url_for('static', filename='img/be5.png') }}">
-<h5>Café Frío Bunny — $55</h5>
-<p>Tu dosis de cafeína bien helada y decorada con crema batida.
-</p>
-<button 
-  class="buy-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#productModal"
-  data-img="{{ url_for('static', filename='img/be5.png') }}"
-  data-title="Café Frío Bunny - $55"
-  data-desc="Tu dosis de cafeína bien helada y decorada con crema batida."
-  data-price="$55"
->
-  Comprar
-</button>
-</div>
-
-</div>
   </div>
 
 
-  
-</section>
+  <!-- 🍽️ COMIDAS -->
+  <h2 class="titulo-seccion">Comidas 🍱</h2>
+  <div class="menu-grid">
 
+    {% for p in productos %}
+      {% if p[2] == 'COMIDAS COMPLETAS' %}
+
+      <div class="card kawaii-card">
+        <img src="{{ url_for('static', filename='img/' ~ p[4].strip()) }}">
+
+        <div class="card-body">
+          <h5>{{ p[1] }} — ${{ p[3] }}</h5>
+          <p>Dreamy Bunny 💖</p>
+
+          <button
+            class="buy-btn product-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal"
+            data-id="{{ p[0] }}"
+            data-img="{{ url_for('static', filename='img/' ~ p[4].strip()) }}"
+            data-title="{{ p[1] }}"
+            data-desc="Dreamy Bunny 💖"
+            data-price="{{ p[3] }}"
+          >
+            Comprar
+          </button>
+
+        </div>
+      </div>
+
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+
+  <!-- 🍰 POSTRES -->
+  <h2 class="titulo-seccion">Postres 🍰</h2>
+  <div class="menu-grid">
+
+    {% for p in productos %}
+      {% if p[2] == 'POSTRES' %}
+
+      <div class="card kawaii-card">
+        <img src="{{ url_for('static', filename='img/' ~ p[4].strip()) }}">
+
+        <div class="card-body">
+          <h5>{{ p[1] }} — ${{ p[3] }}</h5>
+          <p>Dreamy Bunny 💖</p>
+
+          <button
+            class="buy-btn product-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal"
+            data-id="{{ p[0] }}"
+            data-img="{{ url_for('static', filename='img/' ~ p[4].strip()) }}"
+            data-title="{{ p[1] }}"
+            data-desc="Dreamy Bunny 💖"
+            data-price="{{ p[3] }}"
+          >
+            Comprar
+          </button>
+
+        </div>
+      </div>
+
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+
+  <!-- 🧋 BEBIDAS -->
+  <h2 class="titulo-seccion">Bebidas 🧋</h2>
+  <div class="menu-grid">
+
+    {% for p in productos %}
+      {% if p[2] == 'BEBIDAS' %}
+
+      <div class="card kawaii-card">
+        <img src="{{ url_for('static', filename='img/' ~ p[4].strip()) }}">
+
+        <div class="card-body">
+          <h5>{{ p[1] }} — ${{ p[3] }}</h5>
+          <p>Dreamy Bunny 💖</p>
+
+          <button
+            class="buy-btn product-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal"
+            data-id="{{ p[0] }}"
+            data-img="{{ url_for('static', filename='img/' ~ p[4].strip()) }}"
+            data-title="{{ p[1] }}"
+            data-desc="Dreamy Bunny 💖"
+            data-price="{{ p[3] }}"
+          >
+            Comprar
+          </button>
+
+        </div>
+      </div>
+
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+</section>
 <style>
 
 /* 🌸 CONTENEDOR */
@@ -477,7 +204,7 @@
 
 /* 🍓 CARDS */
 .kawaii-card{
-  background: linear-gradient(135deg,#ffffff,#ffe4ec,#e0ffff);
+  background: linear-gradient(135deg,#ffffff,#ffdde7,#d1ffff);
   border:none;
   border-radius:25px;
   overflow:hidden;
@@ -489,8 +216,10 @@
 
 /* 🖼️ IMAGEN */
 .kawaii-card img{
-  height:200px;
-  object-fit:cover;
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  padding: 12px;
 }
 
 /* ✨ HOVER */
@@ -554,6 +283,17 @@
   style="display:none"
   onchange="cambiarImagen(event)"
 >
+<!-- 🌸 TOAST -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+  <div id="toastCarrito" class="toast align-items-center text-bg-success border-0">
+    <div class="d-flex">
+      <div class="toast-body">
+        💖 Agregado al carrito con éxito
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
 
 <!-- 🌸 MODAL PRODUCTO -->
 <div class="modal fade" id="productModal" tabindex="-1">
@@ -561,22 +301,30 @@
     <div class="modal-content kawaii-card">
 
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle"></h5>
+        <h5 id="modalTitle"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body text-center">
-        <img id="modalImg" src="" class="modal-img">
+        <img id="modalImg" class="modal-img">
         <p id="modalDesc"></p>
         <h4 id="modalPrice"></h4>
       </div>
 
       <div class="modal-footer">
         <button class="buy-btn" onclick="editarProducto()">Editar ✏️</button>
-        <button class="buy-btn" onclick="addProductFromModal()">
-  Agregar al carrito 💖
-</button>
-        <button class="buy-btn" data-bs-dismiss="modal">Eliminar❌</button>
+
+        <button
+          id="addCartBtn"
+          class="buy-btn"
+          onclick="addProductFromModal()"
+        >
+          Agregar al carrito 💖
+        </button>
+
+        <button class="buy-btn" data-bs-dismiss="modal">
+          Cerrar ❌
+        </button>
       </div>
 
     </div>
@@ -649,37 +397,47 @@
   </div>
 </div>
 <script>
-document.querySelectorAll(".buy-btn").forEach(btn => {
-  btn.addEventListener("click", function(){
+document.addEventListener("DOMContentLoaded", () => {
 
-    if(this.dataset.img){ // evita conflicto con otros botones
+  document.querySelectorAll(".product-btn").forEach(btn => {
 
-      document.getElementById("modalImg").src = this.dataset.img;
-      document.getElementById("modalTitle").innerText = this.dataset.title;
-      document.getElementById("modalDesc").innerText = this.dataset.desc;
-      document.getElementById("modalPrice").innerText = this.dataset.price;
+    btn.addEventListener("click", () => {
 
-    }
+      const img = btn.getAttribute("data-img");
+      const title = btn.getAttribute("data-title");
+      const desc = btn.getAttribute("data-desc");
+      const price = btn.getAttribute("data-price");
+      const id = btn.getAttribute("data-id");
+
+      console.log("CLICK DETECTADO:", img, title, price); // 👈 DEBUG
+
+      document.getElementById("modalImg").src = img;
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalDesc").textContent = desc;
+      document.getElementById("modalPrice").textContent = "$" + price;
+
+      document.getElementById("addCartBtn").dataset.id = id;
+
+    });
 
   });
+
 });
-function editarProducto(){
-  document.getElementById("fileInput").click();
-}
 
-function cambiarImagen(event){
-  const file = event.target.files[0];
-  if(file){
-    const reader = new FileReader();
+function addProductFromModal() {
 
-    reader.onload = function(e){
-      // cambia la imagen del modal
-      document.getElementById("modalImg").src = e.target.result;
-    };
+  const msg = document.getElementById("msgCarrito");
 
-    reader.readAsDataURL(file);
-  }
+  // mostrar mensaje
+  msg.style.display = "block";
+
+  // ocultar después de 2 segundos
+  setTimeout(() => {
+    msg.style.display = "none";
+  }, 2000);
+
 }
 
 </script>
+
 {% endblock %}
