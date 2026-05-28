@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for, request, flash, redirect, session
+import pymysql
+pymysql.install_as_MySQLdb()
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,11 +12,12 @@ import os
 
 dreamybunnyApp = Flask(__name__)
 
-# =========================================================
-# CONFIG
-# =========================================================
 dreamybunnyApp.config.from_object(config['development'])
 dreamybunnyApp.config.from_object(config['mail'])
+print("HOST:", dreamybunnyApp.config['MYSQL_HOST'])
+print("USER:", dreamybunnyApp.config['MYSQL_USER'])
+print("DB:", dreamybunnyApp.config['MYSQL_DB'])
+print("PORT:", dreamybunnyApp.config['MYSQL_PORT'])
 
 mail = Mail(dreamybunnyApp)
 db = MySQL(dreamybunnyApp)
