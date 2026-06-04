@@ -282,8 +282,8 @@
   accept="image/*" 
   style="display:none"
   onchange="cambiarImagen(event)"
->
-<!-- 🌸 TOAST -->
+> 
+<!--🌸 TOAST -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
   <div id="toastCarrito" class="toast align-items-center text-bg-success border-0">
     <div class="d-flex">
@@ -314,13 +314,9 @@
       <div class="modal-footer">
         <button class="buy-btn" onclick="editarProducto()">Editar ✏️</button>
 
-        <button
-          id="addCartBtn"
-          class="buy-btn"
-          onclick="addProductFromModal()"
-        >
+        <a id="addCartBtn" href="#" class="buy-btn text-decoration-none text-center" style="display: inline-block;">
           Agregar al carrito 💖
-        </button>
+        </a>
 
         <button class="buy-btn" data-bs-dismiss="modal">
           Cerrar ❌
@@ -409,35 +405,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const price = btn.getAttribute("data-price");
       const id = btn.getAttribute("data-id");
 
-      console.log("CLICK DETECTADO:", img, title, price); // 👈 DEBUG
-
+      // Cambiamos los textos e imagen del modal
       document.getElementById("modalImg").src = img;
       document.getElementById("modalTitle").textContent = title;
       document.getElementById("modalDesc").textContent = desc;
       document.getElementById("modalPrice").textContent = "$" + price;
 
-      document.getElementById("addCartBtn").dataset.id = id;
+      // EL TRUCO: Le decimos al enlace adónde debe llevar al usuario
+      document.getElementById("addCartBtn").href = "/iCarrito/" + id;
 
     });
 
   });
 
 });
-
-function addProductFromModal() {
-
-  const msg = document.getElementById("msgCarrito");
-
-  // mostrar mensaje
-  msg.style.display = "block";
-
-  // ocultar después de 2 segundos
-  setTimeout(() => {
-    msg.style.display = "none";
-  }, 2000);
-
-}
-
 </script>
 
 {% endblock %}

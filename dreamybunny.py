@@ -13,20 +13,21 @@ from models.entities.User import User
 
 from flask_mail import Mail, Message
 
+# (IMPORTANTE) para compatibilidad con tu versión anterior
+from config import config
+
 
 # =========================
 # APP
 # =========================
-
 dreamybunnyApp = Flask(__name__)
 
-# 🔴 SECRET KEY (obligatorio en producción)
+# SECRET KEY
 dreamybunnyApp.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'devkey')
 
 # =========================
-# MYSQL (RAILWAY VARIABLES)
+# MYSQL (ENV o producción)
 # =========================
-
 dreamybunnyApp.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
 dreamybunnyApp.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
 dreamybunnyApp.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
@@ -36,15 +37,31 @@ dreamybunnyApp.config['MYSQL_PORT'] = int(os.environ.get('MYSQL_PORT', 3306))
 db = MySQL(dreamybunnyApp)
 
 # =========================
-# MAIL (evita crash si no está configurado)
+# MAIL (compatibilidad viejo + nuevo)
 # =========================
+try:
+    dreamybunnyApp.config.from_object(config['mail'])
+except:
+    pass  # si no existe config, no rompe
 
 mail = Mail(dreamybunnyApp)
+
+
+# =========================
+# DEBUG (del código viejo)
+# =========================
+try:
+    print("HOST:", dreamybunnyApp.config['MYSQL_HOST'])
+    print("USER:", dreamybunnyApp.config['MYSQL_USER'])
+    print("DB:", dreamybunnyApp.config['MYSQL_DB'])
+    print("PORT:", dreamybunnyApp.config['MYSQL_PORT'])
+except:
+    pass
+
 
 # =========================
 # LOGIN
 # =========================
-
 adminUsuarios = LoginManager(dreamybunnyApp)
 adminUsuarios.login_view = 'signin'
 
@@ -56,7 +73,6 @@ def cargarUsuario(id):
 # =========================================================
 # 🏠 RUTAS
 # =========================================================
-
 @dreamybunnyApp.route('/')
 def home():
     return render_template('home.html')
@@ -83,12 +99,9 @@ def bunnys():
 # =========================================================
 # 🛒 CARRITO
 # =========================================================
-
 @dreamybunnyApp.route('/carrito')
 def carrito():
-
     carrito = session.get('carrito', [])
-
     total = sum(float(item['precio']) for item in carrito)
 
     return render_template('carrito.html', carrito=carrito, total=total)
@@ -96,14 +109,12 @@ def carrito():
 
 @dreamybunnyApp.route('/iCarrito/<int:id>')
 def iCarrito(id):
-
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM menu_bunny WHERE id=%s", (id,))
     p = cursor.fetchone()
     cursor.close()
 
     if p:
-
         producto = {
             'id': p[0],
             'nombre': p[1],
@@ -116,6 +127,7 @@ def iCarrito(id):
             session['carrito'] = []
 
         session['carrito'].append(producto)
+        session.modified = True
 
         flash('Producto agregado al carrito 💖')
 
@@ -123,9 +135,38 @@ def iCarrito(id):
 
 
 # =========================================================
+# 🗑️ ACCIONES CARRITO
+# =========================================================
+@dreamybunnyApp.route('/eliminar_del_carrito/<int:index>', methods=['POST'])
+def eliminar_del_carrito(index):
+    if 'carrito' in session:
+        carrito_actual = session['carrito']
+        if 0 <= index < len(carrito_actual):
+            carrito_actual.pop(index)
+            session['carrito'] = carrito_actual
+            session.modified = True
+            flash('Producto eliminado del carrito ❌')
+
+    return redirect(url_for('carrito'))
+
+
+@dreamybunnyApp.route('/vaciar_carrito', methods=['POST'])
+def vaciar_carrito():
+    session.pop('carrito', None)
+    flash('Carrito vaciado 🗑️')
+    return redirect(url_for('carrito'))
+
+
+@dreamybunnyApp.route('/procesar_compra', methods=['POST'])
+def procesar_compra():
+    session.pop('carrito', None)
+    flash('¡Compra simulada con éxito! 🎉')
+    return redirect(url_for('carrito'))
+
+
+# =========================================================
 # 👤 SIGNUP
 # =========================================================
-
 @dreamybunnyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
 
@@ -159,7 +200,6 @@ def signup():
 # =========================================================
 # 🔐 SIGNIN
 # =========================================================
-
 @dreamybunnyApp.route('/signin', methods=['GET', 'POST'])
 def signin():
 
@@ -188,7 +228,6 @@ def signin():
             )
 
             login_user(usuario)
-
             flash(f"¡Bienvenido {usuario.nombre}! 💖", "login_success")
 
             return redirect(url_for('home'))
@@ -202,33 +241,26 @@ def signin():
 # =========================================================
 # 🚪 LOGOUT
 # =========================================================
-
 @dreamybunnyApp.route('/logout')
 @login_required
 def logout():
-
     logout_user()
     flash("Has cerrado sesión")
-
     return redirect(url_for('home'))
 
 
 # =========================================================
 # 👥 USUARIOS
 # =========================================================
-
 @dreamybunnyApp.route('/sUsuario')
 def sUsuario():
 
     cursor = db.connection.cursor()
-
     cursor.execute("""
         SELECT id, nombre, correo, perfil
         FROM usuario
     """)
-
     usuarios = cursor.fetchall()
-
     cursor.close()
 
     return render_template('users.html', usuarios=usuarios)
@@ -237,7 +269,6 @@ def sUsuario():
 # =========================================================
 # 👑 ADMIN
 # =========================================================
-
 @dreamybunnyApp.route('/admin')
 @login_required
 def admin_page():
@@ -250,9 +281,8 @@ def admin_page():
 
 
 # =========================================================
-# 🚀 RUN (LOCAL ONLY)
+# 🚀 RUN
 # =========================================================
-
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    dreamybunnyApp.run(host="0.0.0.0", port=port)
+    dreamybunnyApp.run(host="0.0.0.0", port=port, debug=True)
