@@ -1,1 +1,1 @@
-web: gunicorn dreamybunny:dreamybunnyApp
+web: gunicorn miapp:miproyectoApp
